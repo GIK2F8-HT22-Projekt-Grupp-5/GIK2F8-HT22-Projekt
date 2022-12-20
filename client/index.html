@@ -11,7 +11,21 @@
   <body>
     <main
       id="root"
-      class="pt-24 src=pexels-rodnae-productions-8474642.mp4 type=video/mp4 min-h-screen"
-    ></main>
+      class="pt-24 relative flex items-center justify-center h-screen mb-12 overflow-hidden"
+    >
+      <section
+        class="relative z-30 p-5 text-2xl text-white bg-purple-300 bg-opacity-50 rounded-xl"
+      >
+        Welcome to the dream Travel
+      </section>
+      <video
+        autoplay
+        loop
+        muted
+        class="absolute z-10 w-auto min-w-full min-h-full max-w-none"
+      >
+        <source src="movie/space2.mp4" type="video/mp4" />
+      </video>
+    </main>
   </body>
 </html>
