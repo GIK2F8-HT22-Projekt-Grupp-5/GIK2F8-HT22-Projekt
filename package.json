@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "canvas": "^2.10.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.75.0"
+  }
+}
