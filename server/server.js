@@ -3,9 +3,11 @@ const cardResolution = `512x`;
 // let cardID = ``; //Behöver få id dynamiskt senare
 const cardExt = `png`;
 const cardUrl = `https://art.hearthstonejson.com/v1/render/latest/${cardLocale}/${cardResolution}/${cardID}.${cardExt}`;
-
 /* https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png */
 /* https://art.hearthstonejson.com/v1/render/latest/{LOCALE}/{RESOLUTION}/{CARD_ID}.{EXT} */
+
+const cardSmallUrl = `https://art.hearthstonejson.com/v1/tiles/${cardID}.${cardExt}`;
+/* https://art.hearthstonejson.com/v1/tiles/SW_003.png */
 
 const { error } = require("console");
 const { json } = require("express");

@@ -6,35 +6,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
-    <title>Travel around</title>
+    <title>HearthStone Deck</title>
   </head>
   <body>
-    <header
+    <video
+      autoplay
+      loop
+      muted
+      class="absolute z-10 w-auto min-w-full min-h-full max-w-none bg-cover"
+    >
+      <source src="movie/sea2.mp4" type="video/mp4" />
+    </video>
+    <main
       id="root"
-      class="pt-24 relative flex items-center justify-center h-screen mb-12 overflow-hidden"
+      class="relative flex items-center justify-center h-screen overflow-hidden"
     >
       <section
-        class="w-1/2 h-96 relative z-30 p-5 text-2xl text-white bg-sky-400 bg-opacity-50 rounded-xl"
+        class="w-4/5 h-4/5 relative z-30 p-5 text-2xl text-white bg-sky-400 bg-opacity-50 rounded-xl"
       >
-        <p>Tutto italia</p>
-        <div class="h-64 bg-sky-600 bg-opacity-50">
-          <h1>Sök</h1>
-          <img
-            srcset="
-              https://art.hearthstonejson.com/v1/render/latest/enUS/512x/BARL_005H_03.png
-            "
-          />
-        </div>
+        <!-- Grid 1 main -->
+        <section
+          class="w-auto h-full grid grid-rows-6 grid-cols-10 grid-flow-col gap-4"
+        >
+          <!-- Grid 1.1 -->
+          <div
+            class="row-span-4 col-span-8 border grid grid-rows-2 grid-cols-4 grid-flow-col gap-2 p-2"
+          >
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+            <div
+              class="row-span-1 border col-span-1 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </div>
+          </div>
+          <div class="row-span-1 border col-span-8 ...">02</div>
+          <div class="row-span-1 border col-span-2 ...">03</div>
+          <div class="row-span-1 border col-span-6 ...">04</div>
+          <div class="row-span-6 border col-span-2 ...">05</div>
+        </section>
       </section>
-      <video
-        autoplay
-        loop
-        muted
-        class="absolute z-10 w-auto min-w-full min-h-full max-w-none"
-      >
-        <source src="movie/sea2.mp4" type="video/mp4" />
-      </video>
-    </header>
-    <main></main>
+    </main>
   </body>
+  <script src="./component/main.js"></script>
+  <script src="./component/deckb.js"></script>
+  <script src="index.js"></script>
 </html>
