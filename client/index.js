@@ -1,3 +1,6 @@
+import * as fs from "fs/promises";
+const fs = require("fs");
+
 let mainElement = document.getElementById("root");
 
 /* Byter innehållet mot deckbuilder komponetent som passar den klassen */
@@ -13,14 +16,14 @@ function renderMain() {
 function test() {
   // Requiring fs module in which
   // readFile function is defined.
-  const fs = require("fs");
-  fs.readFile("Input.txt", (err, data) => {
+  fs.readFile("../server/JSON/cards.json", (err, data) => {
     if (err) throw err;
     let testDat = JSON.parse(data);
-    
-    if (testDat.race ) 
 
-
+    testDat.forEach((item) => {
+      if (item.race) console.log(item.race);
+    });
   });
 }
+test();
 //renderMain();
