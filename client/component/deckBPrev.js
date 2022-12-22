@@ -2,6 +2,7 @@ function deckBprev(hero) {
   html = `
         <!-- Flexbox ul/li 2.4 Tidigare kortlekar -->
         <ul
+        id="prevDeck"
         class="row-span-1 border col-span-2 border flex flex-row flex-wrap overflow-y-auto gap-0.5"
         >
         <li

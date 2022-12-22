@@ -1,5 +1,5 @@
 function getMain() {
-  hmtl = `
+  let hmtl = `
 <section
         class="relative z-30 p-5 text-2xl text-white bg-sky-400 bg-opacity-50 rounded-xl"
       >

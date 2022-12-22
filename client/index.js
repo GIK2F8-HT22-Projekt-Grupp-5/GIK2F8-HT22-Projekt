@@ -10,4 +10,19 @@ function renderMain() {
   mainElement.insertAdjacentHTML("beforeend", getMain());
 }
 
-renderMain();
+function renderDeckBuilder() {
+  mainElement.innerHTML = ``;
+  mainElement.insertAdjacentHTML("beforeend", deckB());
+  let cardCanvas = document.getElementById("cardCanvas");
+  cardCanvas.insertAdjacentHTML("beforeend", deckBCards("hej"));
+  let cardButton = document.getElementById("buttonList");
+  cardButton.insertAdjacentHTML("afterbegin", deckBButtons("hejdå"));
+  let cardLogo = document.getElementById("classLogo");
+  cardLogo.insertAdjacentHTML("afterend", deckBprev("hejdå"));
+  let cardPrev = document.getElementById("prevDeck");
+  cardPrev.insertAdjacentHTML("afterend", deckBCurrentDeck("hejdå"));
+}
+
+renderDeckBuilder();
+
+//renderMain();
