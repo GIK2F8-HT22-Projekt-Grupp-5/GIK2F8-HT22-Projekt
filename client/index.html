@@ -9,17 +9,17 @@
     <title>HearthStone Deck</title>
   </head>
   <body>
-    <video
+    <!-- <video
       autoplay
       loop
       muted
       class="absolute z-10 w-auto min-w-full min-h-full max-w-none bg-cover"
     >
       <source src="movie/sea2.mp4" type="video/mp4" />
-    </video>
+    </video> -->
     <main
       id="root"
-      class="relative flex items-center justify-center h-screen overflow-hidden"
+      class="relative flex items-center justify-center h-screen overflow-hidden min-w-fit"
     >
       <section
         class="w-4/5 h-4/5 relative z-30 p-5 text-2xl text-white bg-sky-400 bg-opacity-50 rounded-xl"
@@ -28,19 +28,52 @@
         <section
           class="w-auto h-full grid grid-rows-6 grid-cols-10 grid-flow-col gap-4"
         >
-          <!-- Grid 1.1 -->
-          <ul class="row-span-4 col-span-8 border  flex flex-row flex-wrap overflow-y-auto">
+          <!-- Flexbox 1.1 -->
+          <ul
+            class="row-span-3 col-span-10 border flex flex-row flex-wrap overflow-y-auto"
+          >
             <li
-              class="list-none inline-block w-1/4 flex  items-center justify-center">
+              class="list-none inline-block w-1/4 flex items-center justify-center"
+            >
               <img
                 srcset="
                   https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
                 "
-                class="max-h-full"
+                class="max-h-80"
               />
             </li>
             <li
-              class="list-none inline-block w-1/4 flex items-center justify-center "
+              class="list-none inline-block w-1/4 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-80"
+              />
+            </li>
+            <li
+              class="list-none inline-block w-1/4 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-80"
+              />
+            </li>
+            <li
+              class="list-none inline-block w-1/4 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-80"
+              />
+            </li>
+            <li
+              class="list-none inline-block w-1/4 flex items-center justify-center"
             >
               <img
                 srcset="
@@ -50,17 +83,7 @@
               />
             </li>
             <li
-              class="list-none inline-block w-1/4 flex  items-center justify-center"
-            >
-              <img
-                srcset="
-                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
-                "
-                class="max-h-full"
-              />
-          </li>
-            <li
-              class="list-none inline-block w-1/4 flex  items-center justify-center"
+              class="list-none inline-block w-1/4 flex items-center justify-center"
             >
               <img
                 srcset="
@@ -90,7 +113,7 @@
               />
             </li>
             <li
-              class="list-none inline-block w-1/4 flex  items-center justify-center"
+              class="list-none inline-block w-1/4 flex items-center justify-center"
             >
               <img
                 srcset="
@@ -100,7 +123,7 @@
               />
             </li>
             <li
-              class="list-none inline-block w-1/4 flex  items-center justify-center"
+              class="list-none inline-block w-1/4 flex items-center justify-center"
             >
               <img
                 srcset="
@@ -110,36 +133,7 @@
               />
             </li>
             <li
-            class="list-none inline-block w-1/4 flex  items-center justify-center"
-          >
-            <img
-              srcset="
-                https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
-              "
-              class="max-h-full"
-            />
-                  </li>            <li
-                  class="list-none inline-block w-1/4 flex  items-center justify-center"
-                >
-                  <img
-                    srcset="
-                      https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
-                    "
-                    class="max-h-full"
-                  />
-                </li>
-                <li
-                class="list-none inline-block w-1/4 flex  items-center justify-center"
-              >
-                <img
-                  srcset="
-                    https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
-                  "
-                  class="max-h-full"
-                />
-              </li>
-              <li
-              class="list-none inline-block w-1/4 flex  items-center justify-center"
+              class="list-none inline-block w-1/4 flex items-center justify-center"
             >
               <img
                 srcset="
@@ -149,20 +143,67 @@
               />
             </li>
             <li
-            class="list-none inline-block w-1/4 flex  items-center justify-center"
-          >
-            <img
-              srcset="
-                https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
-              "
-              class="max-h-full"
-            />
-          </li>
+              class="list-none inline-block w-1/4 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </li>
+            <li
+              class="list-none inline-block w-1/4 flex items-center justify-center"
+            >
+              <img
+                srcset="
+                  https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png
+                "
+                class="max-h-full"
+              />
+            </li>
           </ul>
-          <div class="row-span-1 border col-span-8 ...">02</div>
-          <div class="row-span-1 border col-span-2 ...">03</div>
-          <div class="row-span-1 border col-span-6 ...">04</div>
-          <div class="row-span-6 border col-span-2 ...">05</div>
+          <!-- Grid 2.1  Search Card-->
+          <div
+            class="row-span-1 border col-span-6 grid grid-rows-2 grid-cols-1 text-center pb-8 overflow-scroll"
+          >
+            <div class="">Search Card</div>
+            <div>
+              <form class="">
+                <input class="" type="search" />
+              </form>
+            </div>
+          </div>
+          <!-- Grid 3.1  Bottom for Class -->
+          <div
+            class="row-span-1 border col-span-6 grid grid-rows-2 grid-cols-6 text-center"
+          >
+            <div class="border">
+              <button class="border" type="button">Mage</button>
+            </div>
+            <div class="">
+              <button class="border" type="button">Neutral</button>
+            </div>
+            <div class="">
+              <button class="border" type="button">Merlock</button>
+            </div>
+            <div class="">
+              <button class="border" type="button">Beast</button>
+            </div>
+            <div class="">
+              <button class="border" type="button">Neutral</button>
+            </div>
+            <div class="">6</div>
+          </div>
+          <div class="row-span-1 border col-span-2 ...">
+            04 vilken klass typ bild
+          </div>
+          <div class="row-span-1 border col-span-4 ...">
+            05 Tidigare sparade kortlekar
+          </div>
+          <div class="row-span-3 border col-span-4 ...">
+            06 korten i nuvarande kortlek
+          </div>
         </section>
       </section>
     </main>
