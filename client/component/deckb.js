@@ -1,4 +1,4 @@
-function deckB() {
+function deckB(hero) {
   let hmtl = `
   <section
   class="w-4/5 h-4/5 relative z-30 p-5 text-2xl text-white bg-sky-400 bg-opacity-50 rounded-xl"
@@ -30,7 +30,7 @@ function deckB() {
       <div
       id="classLogo" 
       class="row-span-1 col-span-1 flex justify-start border gap-2">
-        <img src="image/mage.webp" class="object-scale-down w-16" />
+        <img src="http://localhost:5000/images/${hero.toLowerCase()}.webp" class="object-scale-down w-16" />
       </div>
     </section>
   </section>

@@ -2,11 +2,11 @@ const cardLocale = `enUS`;
 const cardResolution = `512x`;
 // let cardID = ``; //Behöver få id dynamiskt senare
 const cardExt = `png`;
-const cardUrl = `https://art.hearthstonejson.com/v1/render/latest/${cardLocale}/${cardResolution}/${cardID}.${cardExt}`;
+//const cardUrl = `https://art.hearthstonejson.com/v1/render/latest/${cardLocale}/${cardResolution}/${cardID}.${cardExt}`;
 /* https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png */
 /* https://art.hearthstonejson.com/v1/render/latest/{LOCALE}/{RESOLUTION}/{CARD_ID}.{EXT} */
 
-const cardSmallUrl = `https://art.hearthstonejson.com/v1/tiles/${cardID}.${cardExt}`;
+//const cardSmallUrl = `https://art.hearthstonejson.com/v1/tiles/${cardID}.${cardExt}`;
 /* https://art.hearthstonejson.com/v1/tiles/SW_003.png */
 
 const { error } = require("console");
@@ -27,8 +27,10 @@ app
     next();
   });
 
-app.get("/tasks", async (req, res) => {
+app.get("/deck/:hero", async (req, res) => {
   try {
+    const hero = req.body;
+    console.log(hero)
     /*const task = await fs.readFile("./tasks.json");*/
     res.status(425).send(JSON.parse("Hejhopp"));
   } catch (error) {
@@ -36,7 +38,7 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-app.post("/tasks", async (req, res) => {
+app.post("/deck", async (req, res) => {
   try {
     /*const task = req.body;
         const listBuffer = await fs.readFile("./tasks.json");
@@ -60,7 +62,33 @@ app.post("/tasks", async (req, res) => {
   }
 });
 
-app.delete("/tasks/:id", async (req, res) => {
+app.patch("/deck/:id", async(req, res) =>{
+    
+  const id = req.params.id;
+  try{
+      /*const listBuffer = await fs.readFile("./tasks.json");
+      const currentTasks = JSON.parse(listBuffer);
+
+      currentTasks.forEach(task => {
+          if(task.id == id && task.completed == false){
+              task.completed = true;
+          } 
+          else if(task.id == id && task.completed == true){
+              task.completed = false;
+          }
+      });
+      
+      await fs.writeFile('./tasks.json',JSON.stringify(currentTasks));*/
+  }
+  catch(error) {
+      res.status(500).send({error: error.stack});
+  }
+
+  res.send({messege:`Uppgiften med id: ${id} uppdaterades`});
+
+});
+
+app.delete("/deck/:id", async (req, res) => {
   /*localhost:5000/task/id*/
   /* const id = req.params.id;*/
   try {
@@ -77,5 +105,8 @@ app.delete("/tasks/:id", async (req, res) => {
     res.status(500).send({ error: error.stack });
   }
 });
+
+app.use(express.static('public'));
+app.use('/images', express.static('images')); 
 
 app.listen(PORT, () => console.log("Server running on http://localhost:5000"));
