@@ -9,6 +9,7 @@ function getMain() {
           <div id="DEATHKNIGHT" onclick="heroSelecter(this)">
             <img src="http://localhost:5000/images/deathknight.webp" />Death Knight
           </div>
+          
           <div id="DEMONHUNTER" onclick="heroSelecter(this)">
             <img src="http://localhost:5000/images/demonhunter.webp" />Demon Hunter
           </div>

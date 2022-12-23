@@ -1,5 +1,5 @@
 const mainElement = document.getElementById("root");
-const api = new Api("http://localhost:5000/deck"); 
+const api = new Api("http://localhost:5000/deck");
 
 /* Byter innehållet mot deckbuilder komponetent som passar den klassen */
 function heroSelecter(divChoice) {
@@ -11,22 +11,25 @@ function renderMain() {
   mainElement.insertAdjacentHTML("beforeend", getMain());
 }
 
-function rederDeckBuilderCardCanvas(hero){
+function rederDeckBuilderCardCanvas(hero) {
   let cardCanvas = document.getElementById("cardCanvas");
   cardCanvas.insertAdjacentHTML("beforeend", deckBCards(hero));
+
+  console.log("index.js -> Api jag vill dom här korten", hero);
+  api.getCards(hero);
 }
 
-function renderDeckBuilderClassButtons(hero){
+function renderDeckBuilderClassButtons(hero) {
   let cardButton = document.getElementById("buttonList");
   cardButton.insertAdjacentHTML("afterbegin", deckBButtons(hero));
 }
 
-function renderDeckBuilderLogo(hero){
+function renderDeckBuilderLogo(hero) {
   let cardLogo = document.getElementById("classLogo");
   cardLogo.insertAdjacentHTML("afterend", deckBprev(hero));
 }
 
-function renderDeckBuilderPrevDecks(hero){
+function renderDeckBuilderPrevDecks(hero) {
   let cardPrev = document.getElementById("prevDeck");
   cardPrev.insertAdjacentHTML("afterend", deckBCurrentDeck(hero));
 }

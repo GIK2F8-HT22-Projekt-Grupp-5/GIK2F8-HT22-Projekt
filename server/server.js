@@ -9,7 +9,7 @@ const cardExt = `png`;
 //const cardSmallUrl = `https://art.hearthstonejson.com/v1/tiles/${cardID}.${cardExt}`;
 /* https://art.hearthstonejson.com/v1/tiles/SW_003.png */
 
-const { error } = require("console");
+const { error, count } = require("console");
 const { json } = require("express");
 const express = require("express");
 const app = express();
@@ -29,9 +29,55 @@ app
 
 app.get("/deck/:hero", async (req, res) => {
   try {
-    const hero = req.body;
-    console.log(hero)
-    /*const task = await fs.readFile("./tasks.json");*/
+    const hero = req.params.hero;
+    console.log("Server har fått från Api ->", hero);
+    const listBuffer = await fs.readFile("./JSON/cards.json");
+    const cards = JSON.parse(listBuffer);
+    console.log(cards);
+
+    let race = [];
+    let race2 = [];
+    // Loopar igenom varje element i listan "test"
+    for (const item of cards) {
+      // Loopar igenom varje nyckel/värde-par i elementet
+      for (const [key, value] of Object.entries(item)) {
+        // Kontrollerar om elementet har en nyckel med namnet "cardClass"
+        // Eller om värdet på "cardClass"-nyckeln är "NEUTRAL"
+        if ("cardClass" in item && item["cardClass"] === hero) {
+          // Kontrollerar om värdet på "cardClass"-nyckeln är "WARRIOR"
+          // Kontrollerar om aktuell nyckel är "race"
+          if (key === "name") {
+            //   // Lägger till värdet på "race"-nyckeln till listan "race"
+            race.push(item["id"]);
+          }
+        }
+      }
+    }
+    // Loopar igenom varje element i listan "test"
+    for (const item of cards) {
+      // Loopar igenom varje nyckel/värde-par i elementet
+      for (const [key, value] of Object.entries(item)) {
+        // Kontrollerar om elementet har en nyckel med namnet "cardClass"
+        // Eller om värdet på "cardClass"-nyckeln är "NEUTRAL"
+        if ("cardClass" in item && item["cardClass"] === "NEUTRAL") {
+          // Kontrollerar om värdet på "cardClass"-nyckeln är "WARRIOR"
+          // Kontrollerar om aktuell nyckel är "race"
+          if (key === "name") {
+            //   // Lägger till värdet på "race"-nyckeln till listan "race"
+            race2.push(item["id"]);
+          }
+        }
+      }
+    }
+    // console.log(race);
+    console.log(race.length);
+
+    // console.log(race2);
+    console.log(race2.length);
+
+    let bigList = race.concat(race2);
+    console.log(bigList.length);
+
     res.status(425).send(JSON.parse("Hejhopp"));
   } catch (error) {
     res.status(500).send({ error: error.stack });
@@ -62,11 +108,10 @@ app.post("/deck", async (req, res) => {
   }
 });
 
-app.patch("/deck/:id", async(req, res) =>{
-    
+app.patch("/deck/:id", async (req, res) => {
   const id = req.params.id;
-  try{
-      /*const listBuffer = await fs.readFile("./tasks.json");
+  try {
+    /*const listBuffer = await fs.readFile("./tasks.json");
       const currentTasks = JSON.parse(listBuffer);
 
       currentTasks.forEach(task => {
@@ -79,13 +124,11 @@ app.patch("/deck/:id", async(req, res) =>{
       });
       
       await fs.writeFile('./tasks.json',JSON.stringify(currentTasks));*/
-  }
-  catch(error) {
-      res.status(500).send({error: error.stack});
+  } catch (error) {
+    res.status(500).send({ error: error.stack });
   }
 
-  res.send({messege:`Uppgiften med id: ${id} uppdaterades`});
-
+  res.send({ messege: `Uppgiften med id: ${id} uppdaterades` });
 });
 
 app.delete("/deck/:id", async (req, res) => {
@@ -106,7 +149,7 @@ app.delete("/deck/:id", async (req, res) => {
   }
 });
 
-app.use(express.static('public'));
-app.use('/images', express.static('images')); 
+app.use(express.static("public"));
+app.use("/images", express.static("images"));
 
 app.listen(PORT, () => console.log("Server running on http://localhost:5000"));
