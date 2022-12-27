@@ -4,7 +4,7 @@ function getMain() {
         class="relative z-30 p-5 text-2xl text-white bg-sky-400 bg-opacity-50 rounded-xl"
       >
         <section
-          class="grid auto-cols-max auto-rows-max grid-cols-5 gap-2 text-center"
+          class=" text-sm break-all grid auto-cols-max auto-rows-max grid-cols-5 gap-2 text-center"
         >
           <div id="DEATHKNIGHT" onclick="heroSelecter(this)">
             <img src="http://localhost:5000/images/deathknight.webp" />Death Knight

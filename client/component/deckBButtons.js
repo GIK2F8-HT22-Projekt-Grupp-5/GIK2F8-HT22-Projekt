@@ -6,7 +6,7 @@ function deckBButtons(hero, races) {
       >`;
   races.forEach((race) => {
     html += `<button id="${race}-${hero}"
-    class=" bg-sky-900 bg-opacity-50 rounded-xl flex grow justify-center items-center "
+    class="text-sm break-all bg-sky-900 bg-opacity-50 rounded-xl flex grow justify-center items-center "
     type="button" onclick="raceClick(this)"
   >
     ${race}

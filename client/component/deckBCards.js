@@ -7,10 +7,12 @@ function deckBCards(cardIds) {
   cardIds.forEach((id) => {
     html += `
       <li
-      class="list-none inline-block w-1/4 flex items-center justify-center ">
+      id="${id}"
+      class="list-none inline-block w-1/4 flex items-center justify-center "
+      onclick="addToDeck(this)">
       <img
-        srcset="
-          https://art.hearthstonejson.com/v1/render/latest/enUS/512x/${id}.png
+        src="
+          https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${id}.png
         "
         class="max-h-80"
       />
