@@ -15,14 +15,27 @@ function rederDeckBuilderCardCanvas(hero) {
   let cardCanvas = document.getElementById("cardCanvas");
   console.log("index.js -> Api jag vill dom här korten", hero);
 
-  api.getCards(hero).then((ids)=>{cardCanvas.insertAdjacentHTML("beforeend",deckBCards(ids));});
+  api.getCards(hero).then((ids) => {
+    cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids, hero));
+  });
+}
 
-  
+function updateDeckBuilderCardCanvas(hero, race) {
+  let cardCanvas = document.getElementById("cardCanvas");
+  cardCanvas.innerHTML = ``;
+  console.log("index.js -> Api jag vill dom här korten", race);
+
+  api.raceCards(hero, race).then((ids) => {
+    cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids));
+  });
 }
 
 function renderDeckBuilderClassButtons(hero) {
+  console.log("race till api", hero);
   let cardButton = document.getElementById("buttonList");
-  cardButton.insertAdjacentHTML("afterbegin", deckBButtons(hero));
+  api.getRaces(hero).then((races) => {
+    cardButton.insertAdjacentHTML("afterbegin", deckBButtons(hero, races));
+  });
 }
 
 function renderDeckBuilderLogo(hero) {
@@ -43,6 +56,14 @@ function renderDeckBuilder(hero) {
   renderDeckBuilderClassButtons(hero);
   renderDeckBuilderLogo(hero);
   renderDeckBuilderPrevDecks(hero);
+}
+
+function raceClick(button) {
+  let id = button.id;
+  info = id.split("-");
+  race = info[0];
+  hero = info[1];
+  updateDeckBuilderCardCanvas(hero, race);
 }
 
 renderMain();

@@ -27,7 +27,8 @@ class Api {
       .then((result) => result.json())
       .catch((err) => console.log(err));
   }
-  /* GettAll (read) --> GET */
+
+  /* GetAll (read) --> GET */
   getCards(hero) {
     const JSONdata = JSON.stringify(hero);
     console.log("Api -> Server", hero);
@@ -43,6 +44,32 @@ class Api {
 
   getHeros() {
     return fetch(this.url)
+      .then((result) => result.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  getRaces(hero) {
+    const JSONdata = JSON.stringify(hero);
+    console.log("Api/race -> Server", hero);
+    //console.log(`${this.url}/${hero}/races`);
+    const request = new Request(`${this.url}/${hero}/races`, {
+      method: "GET",
+    });
+    return fetch(request)
+      .then((result) => result.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  raceCards(hero, race) {
+    //const JSONdata = JSON.stringify(race);
+    console.log("Api -> Server aa", race);
+    const request = new Request(`${this.url}/${hero}/race/${race}`, {
+      method: "GET",
+    });
+
+    return fetch(request)
       .then((result) => result.json())
       .then((data) => data)
       .catch((err) => console.log(err));

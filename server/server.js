@@ -10,6 +10,7 @@ const cardExt = `png`;
 /* https://art.hearthstonejson.com/v1/tiles/SW_003.png */
 
 const { error, count } = require("console");
+const { KeyObject } = require("crypto");
 const { json } = require("express");
 const express = require("express");
 const app = express();
@@ -28,83 +29,107 @@ app
     next();
   });
 
+app.get("/deck/:hero/race/:race", async (req, res) => {
+  try {
+    const race = req.params.race;
+    //console.log("try", race);
+    let raceCards = [];
+    const listBuffer = await fs.readFile("./JSON/cards.json");
+    const cards = JSON.parse(listBuffer);
+    console.log("Server har fått från race cards ->", race);
+
+    cards.forEach((card) => {
+      if (
+        card.type != "HERO" &&
+        card.type != "HERO_POWER" &&
+        card.type != "GAME_MODE_BUTTON" &&
+        card.type != "ENCHANTMENT" &&
+        card.cost != 0
+      ) {
+        if (card.hasOwnProperty("race")) {
+          if (card.race === race) {
+            if (!raceCards.includes(card.id)) {
+              //console.log(card.id);
+              raceCards.push(card.id);
+            }
+          }
+        }
+      }
+    });
+    // cards.forEach((card) => {
+    //   if (card.hasOwnProperty("cardClass")) {
+    //     if (card.cardClass == "NEUTRAL") {
+    //       if (card.race == race) {
+    //         raceCards.push(card);
+    //       }
+    //     }
+    //   }
+    // });
+    console.log("här", raceCards);
+    res.send(raceCards);
+  } catch (error) {
+    res.status(500).send({ error: error.stack });
+  }
+});
+
+app.get("/deck/:hero/races", async (req, res) => {
+  try {
+    const hero = req.params.hero;
+    let race = [];
+    const listBuffer = await fs.readFile("./JSON/cards.json");
+    const cards = JSON.parse(listBuffer);
+    console.log("Server har fått från race Api ->", hero);
+    cards.forEach((card) => {
+      if (card.hasOwnProperty("cardClass")) {
+        if (card.cardClass == hero || card.cardClass == "NEUTRAL") {
+          if (card.race != undefined) {
+            race.push(card.race);
+          }
+        }
+      }
+    });
+    race = [...new Set(race)];
+    //console.log(race);
+    res.send(race);
+
+    // const hero = req.params.hero.races;
+    // const listBuffer = await fs.readFile("./JSON/cards.json");
+    // const cards = JSON.parse(listBuffer);
+    // console.log(hero);
+  } catch (error) {
+    res.status(500).send({ error: error.stack });
+  }
+});
+
 app.get("/deck/:hero", async (req, res) => {
   try {
     const hero = req.params.hero;
-    
+
     const listBuffer = await fs.readFile("./JSON/cards.json");
-    
+
     const cards = JSON.parse(listBuffer);
-    
-    //console.log(cards);
+    let herocards = [];
+    console.log("Server har fått från hero Api ->", hero);
 
-    let race = [];
-    let race2 = [];
-    let test = []
-    console.log("Server har fått från Api ->", hero);
-
-    
-    cards.forEach(card => {
-      if (card.type != "HERO" && card.type != "HERO_POWER" && card.type !="GAME_MODE_BUTTON"){
-
-        if(card.hasOwnProperty('cardClass')){
-           
-          if(card.cardClass == "NEUTRAL")
-          {   
-            test.push(card.id)
-          }
-          if(card.cardClass == hero)
-          {   
-            test.push(card.id)
+    cards.forEach((card) => {
+      if (
+        card.type != "HERO" &&
+        card.type != "HERO_POWER" &&
+        card.type != "GAME_MODE_BUTTON" &&
+        card.type != "ENCHANTMENT" &&
+        card.cost != 0
+      ) {
+        if (card.hasOwnProperty("cardClass")) {
+          if (card.cardClass == hero) {
+            if (!herocards.includes(card.id)) {
+              //console.log(card.id);
+              herocards.push(card.id);
+            }
           }
         }
       }
-      
     });
-
-
-    // Loopar igenom varje element i listan "test"
-    for (const item of cards) {
-      // Loopar igenom varje nyckel/värde-par i elementet
-      for (const [key, value] of Object.entries(item)) {
-        // Kontrollerar om elementet har en nyckel med namnet "cardClass"
-        // Eller om värdet på "cardClass"-nyckeln är "NEUTRAL"
-        if ("cardClass" in item && item["cardClass"] === hero) {
-          // Kontrollerar om värdet på "cardClass"-nyckeln är "WARRIOR"
-          // Kontrollerar om aktuell nyckel är "race"
-          if (key === "name") {
-            //   // Lägger till värdet på "race"-nyckeln till listan "race"
-            race.push(item["id"]);
-          }
-        }
-      }
-    }
-    // Loopar igenom varje element i listan "test"
-    for (const item of cards) {
-      // Loopar igenom varje nyckel/värde-par i elementet
-      for (const [key, value] of Object.entries(item)) {
-        // Kontrollerar om elementet har en nyckel med namnet "cardClass"
-        // Eller om värdet på "cardClass"-nyckeln är "NEUTRAL"
-        if ("cardClass" in item && item["cardClass"] === "NEUTRAL") {
-          // Kontrollerar om värdet på "cardClass"-nyckeln är "WARRIOR"
-          // Kontrollerar om aktuell nyckel är "race"
-          if (key === "name") {
-            //   // Lägger till värdet på "race"-nyckeln till listan "race"
-            race2.push(item["id"]);
-          }
-        }
-      }
-    }
-    // console.log(race);
-    //console.log(race.length);
-
-    // console.log(race2);
-    //console.log(race2.length);
-
-    let bigList = race.concat(race2);
-    //console.log(bigList.length);
-
-    res.status(425).send(test);
+    res.send(herocards);
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
