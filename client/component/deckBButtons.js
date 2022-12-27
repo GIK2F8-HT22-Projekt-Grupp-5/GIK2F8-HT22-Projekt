@@ -2,7 +2,7 @@ function deckBButtons(hero, races) {
   html = `
   <!-- Grid 2.1  Button for Class -->
         <div
-        class="row-span-3 border col-span-3 grid grid-rows-3 grid-cols-6 text-center gap-1 p-1 "
+        class="row-span-3 col-span-3 grid grid-rows-3 grid-cols-6 text-center gap-1 p-1 "
       >`;
   races.forEach((race) => {
     html += `<button id="${race}-${hero}"

@@ -3,7 +3,7 @@ function deckBCards(cardIds) {
   let html = `
     <!-- Flexbox 1.1 -->
     <ul
-      class="row-span-3 col-span-10 border flex flex-row flex-wrap overflow-y-auto">`;
+      class="row-span-3 col-span-10  flex flex-row flex-wrap overflow-y-auto">`;
   cardIds.forEach((id) => {
     html += `
       <li
