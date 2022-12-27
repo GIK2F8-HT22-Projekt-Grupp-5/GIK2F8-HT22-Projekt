@@ -19,10 +19,10 @@ function deckB(hero) {
       <div
         class="bg-sky-900 bg-opacity-50 rounded-xl row-span-1 border col-span-3 grid grid-rows-1 grid-cols-1 text-center pb-8"
       >
-        <div>
-          Search Card
-          <form class="">
-            <input class="" type="search" />
+      <label class="" for="searchField"
+      >Ange kortets namn:</label
+    >
+            <input class="text-black" id="searchField" type="search" onkeyup="searchCard(this)" />
           </form>
         </div>
       </div>

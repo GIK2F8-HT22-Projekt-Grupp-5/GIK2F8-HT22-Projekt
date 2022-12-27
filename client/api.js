@@ -75,6 +75,21 @@ class Api {
       .catch((err) => console.log(err));
   }
 
+  searchCards(searchstring) {
+    const JSONData = JSON.stringify({ searchString: searchstring });
+    const request = new Request(`${this.url}/search`, {
+      method: "POST",
+      body: JSONData,
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    return fetch(request)
+      .then((result) => result.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
   /* Remove --> DELETE */
   remove(id) {
     console.log(`Removing task with id: ${id}`);

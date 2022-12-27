@@ -29,10 +29,33 @@ app
     next();
   });
 
+app.post("/deck/search", async (req, res) => {
+  try {
+    let searchCards = [];
+    const searchWords = req.body.searchString;
+    const listBuffer = await fs.readFile("./JSON/cards.json");
+    const cards = JSON.parse(listBuffer);
+    cards.forEach((card) => {
+      if (
+        card.type != "HERO" &&
+        card.type != "HERO_POWER" &&
+        card.type != "GAME_MODE_BUTTON" &&
+        card.type != "ENCHANTMENT" &&
+        card.cost != 0
+      ) {
+        if (card.name.includes(searchWords)) {
+          searchCards.push(card.id);
+        }
+      }
+    });
+    res.send(searchCards);
+  } catch (error) {
+    res.status(500).send({ error: error.stack });
+  }
+});
 app.get("/deck/:hero/race/:race", async (req, res) => {
   try {
     const race = req.params.race;
-    //console.log("try", race);
     let raceCards = [];
     const listBuffer = await fs.readFile("./JSON/cards.json");
     const cards = JSON.parse(listBuffer);
@@ -49,23 +72,12 @@ app.get("/deck/:hero/race/:race", async (req, res) => {
         if (card.hasOwnProperty("race")) {
           if (card.race === race) {
             if (!raceCards.includes(card.id)) {
-              //console.log(card.id);
               raceCards.push(card.id);
             }
           }
         }
       }
     });
-    // cards.forEach((card) => {
-    //   if (card.hasOwnProperty("cardClass")) {
-    //     if (card.cardClass == "NEUTRAL") {
-    //       if (card.race == race) {
-    //         raceCards.push(card);
-    //       }
-    //     }
-    //   }
-    // });
-    console.log("här", raceCards);
     res.send(raceCards);
   } catch (error) {
     res.status(500).send({ error: error.stack });
@@ -89,13 +101,7 @@ app.get("/deck/:hero/races", async (req, res) => {
       }
     });
     race = [...new Set(race)];
-    //console.log(race);
     res.send(race);
-
-    // const hero = req.params.hero.races;
-    // const listBuffer = await fs.readFile("./JSON/cards.json");
-    // const cards = JSON.parse(listBuffer);
-    // console.log(hero);
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
@@ -122,7 +128,6 @@ app.get("/deck/:hero", async (req, res) => {
         if (card.hasOwnProperty("cardClass")) {
           if (card.cardClass == hero) {
             if (!herocards.includes(card.id)) {
-              //console.log(card.id);
               herocards.push(card.id);
             }
           }
