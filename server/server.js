@@ -14,6 +14,7 @@ const { json } = require("express");
 const express = require("express");
 const app = express();
 const fs = require("fs/promises");
+const { test } = require("media-typer");
 
 const PORT = 5000;
 app
@@ -30,13 +31,38 @@ app
 app.get("/deck/:hero", async (req, res) => {
   try {
     const hero = req.params.hero;
-    console.log("Server har fått från Api ->", hero);
+    
     const listBuffer = await fs.readFile("./JSON/cards.json");
+    
     const cards = JSON.parse(listBuffer);
-    console.log(cards);
+    
+    //console.log(cards);
 
     let race = [];
     let race2 = [];
+    let test = []
+    console.log("Server har fått från Api ->", hero);
+
+    
+    cards.forEach(card => {
+      if (card.type != "HERO" && card.type != "HERO_POWER" && card.type !="GAME_MODE_BUTTON"){
+
+        if(card.hasOwnProperty('cardClass')){
+           
+          if(card.cardClass == "NEUTRAL")
+          {   
+            test.push(card.id)
+          }
+          if(card.cardClass == hero)
+          {   
+            test.push(card.id)
+          }
+        }
+      }
+      
+    });
+
+
     // Loopar igenom varje element i listan "test"
     for (const item of cards) {
       // Loopar igenom varje nyckel/värde-par i elementet
@@ -70,15 +96,15 @@ app.get("/deck/:hero", async (req, res) => {
       }
     }
     // console.log(race);
-    console.log(race.length);
+    //console.log(race.length);
 
     // console.log(race2);
-    console.log(race2.length);
+    //console.log(race2.length);
 
     let bigList = race.concat(race2);
-    console.log(bigList.length);
+    //console.log(bigList.length);
 
-    res.status(425).send(JSON.parse("Hejhopp"));
+    res.status(425).send(test);
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }

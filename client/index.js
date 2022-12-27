@@ -13,10 +13,11 @@ function renderMain() {
 
 function rederDeckBuilderCardCanvas(hero) {
   let cardCanvas = document.getElementById("cardCanvas");
-  cardCanvas.insertAdjacentHTML("beforeend", deckBCards(hero));
-
   console.log("index.js -> Api jag vill dom här korten", hero);
-  api.getCards(hero);
+
+  api.getCards(hero).then((ids)=>{cardCanvas.insertAdjacentHTML("beforeend",deckBCards(ids));});
+
+  
 }
 
 function renderDeckBuilderClassButtons(hero) {
