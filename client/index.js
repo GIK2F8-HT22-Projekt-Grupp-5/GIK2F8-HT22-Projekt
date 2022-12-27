@@ -75,4 +75,10 @@ function searchCard(searchField) {
   //console.log(searchField.value);
 }
 
+//
+function addToDeck(li) {
+  console.log("skickar till api ->", li.id);
+  api;
+}
+
 renderMain();
