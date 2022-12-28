@@ -66,13 +66,13 @@ function raceClick(button) {
   updateDeckBuilderCardCanvas(hero, race);
 }
 
-function searchCard(searchField) {
+function searchCard(e) {
+  e.preventDefault();
   let cardCanvas = document.getElementById("cardCanvas");
   cardCanvas.innerHTML = ``;
   api
     .searchCards(searchField.value)
     .then((ids) => cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids)));
-  //console.log(searchField.value);
 }
 
 //

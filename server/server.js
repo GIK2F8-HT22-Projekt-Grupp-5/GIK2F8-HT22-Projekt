@@ -32,7 +32,9 @@ app
 app.post("/deck/search", async (req, res) => {
   try {
     let searchCards = [];
-    const searchWords = req.body.searchString;
+    let searchWords = req.body.searchString;
+    searchWords = searchWords.toLowerCase();
+    console.log(searchWords);
     const listBuffer = await fs.readFile("./JSON/cards.json");
     const cards = JSON.parse(listBuffer);
     cards.forEach((card) => {
@@ -43,7 +45,7 @@ app.post("/deck/search", async (req, res) => {
         card.type != "ENCHANTMENT" &&
         card.cost != 0
       ) {
-        if (card.name.includes(searchWords)) {
+        if (card.name.toLowerCase().includes(searchWords)) {
           searchCards.push(card.id);
         }
       }
