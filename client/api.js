@@ -31,7 +31,7 @@ class Api {
 
   /* GetAll (read) --> GET */
   getCards(hero) {
-    const JSONdata = JSON.stringify(hero);
+    //const JSONdata = JSON.stringify(hero);
     console.log("Api -> Server", hero);
     const request = new Request(`${this.url}/${hero}`, {
       method: "GET",

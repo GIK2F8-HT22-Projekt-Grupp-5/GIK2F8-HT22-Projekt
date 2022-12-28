@@ -34,7 +34,7 @@ app.post("/deck/search", async (req, res) => {
     let searchCards = [];
     let searchWords = req.body.searchString;
     searchWords = searchWords.toLowerCase();
-    console.log(searchWords);
+    //console.log(searchWords);
     const listBuffer = await fs.readFile("./JSON/cards.json");
     const cards = JSON.parse(listBuffer);
     cards.forEach((card) => {
@@ -151,7 +151,6 @@ app.post("/deck", async (req, res) => {
 
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const currentDecks = JSON.parse(listBuffer);
-    console.log("afdasdsdas", currentDecks);
 
     // sätter id
     let maxDeckId = 1;
@@ -163,7 +162,6 @@ app.post("/deck", async (req, res) => {
       );
       maxDeckId++;
     }
-    console.log("fffff", maxDeckId);
 
     const newDeck = { id: maxDeckId, deckName: body[0], cards: body[1] };
     const deckList = currentDecks ? [...currentDecks, newDeck] : [newDeck];
