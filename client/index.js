@@ -45,6 +45,7 @@ function renderDeckBuilderLogo(hero) {
 
 function renderDeckBuilderPrevDecks(hero) {
   let cardPrev = document.getElementById("prevDeck");
+  cardPrev.innerHTML = ``;
   cardPrev.insertAdjacentHTML("afterend", deckBCurrentDeck(hero));
 }
 
@@ -78,7 +79,27 @@ function searchCard(e) {
 //
 function addToDeck(li) {
   console.log("skickar till api ->", li.id);
-  api;
+  let counter = 0;
+  for (item of currentDeck.cards.flat()) {
+    if (item == li.id) {
+      counter++;
+    }
+  }
+  if (currentDeck.cards.length < 30 && counter < 2) {
+    currentDeck.cards.push(li.id);
+
+    // currentDeck.innerHTML = ``;
+    document.getElementById("deckList").remove();
+    renderDeckBuilderPrevDecks();
+  }
+}
+
+function removeCardCurrentDeck(li) {
+  const index = currentDeck.cards.indexOf(li.id);
+  currentDeck.cards.splice(index, 1);
+
+  document.getElementById("deckList").remove();
+  renderDeckBuilderPrevDecks();
 }
 
 renderMain();

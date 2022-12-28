@@ -28,7 +28,7 @@ function deckB(hero) {
                    for="searchField">
                    Ange kortets namn:
             </label>
-            <input class="w-1/2 mx-auto rounded row-span-1 col-span-1 text-black" 
+            <input class="bg-sky-900 bg-opacity-50 w-1/2 mx-auto rounded row-span-1 col-span-1 text-black" 
                           id="searchField" 
                           type="search"            
             />
