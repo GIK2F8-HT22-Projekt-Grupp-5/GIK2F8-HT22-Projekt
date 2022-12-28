@@ -89,7 +89,7 @@ function addToDeck(li) {
     currentDeck.cards.push(li.id);
 
     // currentDeck.innerHTML = ``;
-    document.getElementById("deckList").remove();
+    document.getElementById("deckBuild").remove();
     renderDeckBuilderPrevDecks();
   }
 }
@@ -98,8 +98,22 @@ function removeCardCurrentDeck(li) {
   const index = currentDeck.cards.indexOf(li.id);
   currentDeck.cards.splice(index, 1);
 
-  document.getElementById("deckList").remove();
+  document.getElementById("deckBuild").remove();
   renderDeckBuilderPrevDecks();
+}
+
+function cardCurrentDeckManageDeckButton(e) {
+  e.preventDefault();
+  const newDeckList = [];
+  const listElements = document
+    .querySelector("#deckBuildList")
+    .querySelectorAll("li");
+  listElements.forEach(function (li) {
+    newDeckList.push(li.id);
+  });
+
+  const newDeckName = document.getElementById("deckBuildName").value;
+  api.createDeck(newDeckName, newDeckList).then((data) => console.log(data));
 }
 
 renderMain();

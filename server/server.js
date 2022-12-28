@@ -144,23 +144,32 @@ app.get("/deck/:hero", async (req, res) => {
 
 app.post("/deck", async (req, res) => {
   try {
-    /*const task = req.body;
-        const listBuffer = await fs.readFile("./tasks.json");
-        const currentTasks = JSON.parse(listBuffer);
-        let nextTaskId = 1;
-        if (currentTasks && currentTasks.length > 0) {
-            nextTaskId = currentTasks.reduce((maxId, currentElement) => currentElement.id > maxId ? currentElement.id : maxId,
-            nextTaskId
-            );
-            nextTaskId++;
-        }
-        */
-    /*const nextTask = {id: nextTaskId, ...task};
-        const taskList = currentTasks ? [...currentTasks, nextTask] : [nextTask];*/
+    const body = req.body;
+    // const deckName = body[0];
+    // const deckList = body[1];
+    // console.log(deckName, deckList);
 
-    /*await fs.writeFile('./tasks.json',JSON.stringify(taskList));*/
+    const listBuffer = await fs.readFile("./JSON/decks.json");
+    const currentDecks = JSON.parse(listBuffer);
+    console.log("afdasdsdas", currentDecks);
 
-    res.send("Hej hopp");
+    // sätter id
+    let maxDeckId = 1;
+    if (currentDecks && currentDecks.length > 0) {
+      maxDeckId = currentDecks.reduce(
+        (maxId, currentElement) =>
+          currentElement.id > maxId ? currentElement.id : maxId,
+        maxDeckId
+      );
+      maxDeckId++;
+    }
+    console.log("fffff", maxDeckId);
+
+    const newDeck = { id: maxDeckId, deckName: body[0], cards: body[1] };
+    const deckList = currentDecks ? [...currentDecks, newDeck] : [newDeck];
+    await fs.writeFile("./JSON/decks.json", JSON.stringify(deckList));
+
+    res.send(`Deck ${body[0]} saved`);
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }

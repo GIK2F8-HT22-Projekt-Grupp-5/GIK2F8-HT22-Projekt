@@ -5,8 +5,9 @@ class Api {
     this.url = url;
   }
   /* Create --> POST */
-  createDeck(data) {
-    const JSONdata = JSON.stringify(data);
+  createDeck(deckName, deckList) {
+    const JSONdata = JSON.stringify([deckName, deckList]);
+    console.log("från api - > server", JSONdata);
     const request = new Request(this.url, {
       method: "POST",
       body: JSONdata,
