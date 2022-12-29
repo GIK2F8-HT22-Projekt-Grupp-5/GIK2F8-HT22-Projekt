@@ -72,6 +72,26 @@ app.post("/deck/search", async (req, res) => {
     res.status(500).send({ error: error.stack });
   }
 });
+
+app.post("/deck/deckId/:id", async (req, res) => {
+  try {
+    const deckId = req.body.id;
+    const listBuffer = await fs.readFile("./JSON/decks.json");
+    const decks = JSON.parse(listBuffer);
+    decks.forEach((deck) => {
+      if (deck.id == deckId) 
+      {
+        res.send(deck);
+        return;
+      }
+    });
+    
+  } catch (error) {
+    res.status(500).send({ error: error.stack });
+  }
+});
+
+
 app.get("/deck/:hero/race/:race", async (req, res) => {
   try {
     const race = req.params.race;

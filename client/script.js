@@ -50,20 +50,19 @@ function renderDeckBuilderPrevDecks(hero) {
   });
 }
 
-function renderDeckBuilderCurrentDeckFromId(id) {
+function renderDeckBuilderCurrentDeckFromId(deck) {
   const currentDeck = document.getElementById("deckBuild");
   currentDeck.remove();
   let cardPrevContainer = document.getElementById("prevDecksContainer");
-  api
-    .getPrevDeck(id)
-    .then((ids) =>
-      cardPrevContainer.insertAdjacentHTML("afterend", deckBCards(ids))
-    );
+  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck(deck))
+
+
+
 }
 
 function renderDeckBuilderCurrentDeck(hero) {
   let cardPrevContainer = document.getElementById("prevDecksContainer");
-  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck(hero));
+  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck());
 }
 
 function renderDeckBuilder(hero) {
@@ -138,7 +137,7 @@ function cardCurrentDeckManageDeckButton(e) {
 
 function loadPrevDeck(button) {
   const id = button.id;
-  api.getPrevDeck(id).then((deck) => renderDeckBuilderCurrentDeck(deck));
+  api.getDeckById(id).then((deck) => renderDeckBuilderCurrentDeckFromId(deck));
 }
 
 renderMain();

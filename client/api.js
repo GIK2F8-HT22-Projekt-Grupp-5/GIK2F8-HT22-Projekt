@@ -100,6 +100,19 @@ class Api {
       .catch((err) => console.log(err));
   }
 
+  getDeckById(id){
+    const JSONData = JSON.stringify({ id: id });
+    const request = new Request(`${this.url}/deckId/${id}`, {
+      method: "POST",
+      body: JSONData,
+      headers: { "content-type": "application/json" },
+    });
+    return fetch(request)
+      .then((result) => result.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }    
+
   /* Remove --> DELETE */
   remove(id) {
     return fetch(`${this.url}/${id}`, {
