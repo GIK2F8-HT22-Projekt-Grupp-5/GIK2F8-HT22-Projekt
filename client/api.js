@@ -5,9 +5,9 @@ class Api {
     this.url = url;
   }
   /* Create --> POST */
-  createDeck(deckName, deckList) {
-    const JSONdata = JSON.stringify([deckName, deckList]);
-    console.log("från api - > server", JSONdata);
+  createDeck(deckName, heroClass, deckList) {
+    const JSONdata = JSON.stringify([deckName, heroClass, deckList]);
+    //console.log("från api - > server", JSONdata);
     const request = new Request(this.url, {
       method: "POST",
       body: JSONdata,
@@ -20,8 +20,20 @@ class Api {
       .catch((err) => console.log(err));
   }
 
+  getSavedDeckNames(heroClass) {
+    const JSONData = JSON.stringify({ hero: heroClass });
+    const request = new Request(`${this.url}/savedDecks/${heroClass}`, {
+      method: "POST",
+      body: JSONData,
+      headers: { "content-type": "application/json" },
+    });
+    return fetch(request)
+      .then((result) => result.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
   updateDeck(id) {
-    console.log(`Uppdating task with id: ${id}`);
     return fetch(`${this.url}/${id}`, {
       method: "PATCH",
     })
@@ -32,7 +44,6 @@ class Api {
   /* GetAll (read) --> GET */
   getCards(hero) {
     //const JSONdata = JSON.stringify(hero);
-    console.log("Api -> Server", hero);
     const request = new Request(`${this.url}/${hero}`, {
       method: "GET",
     });
@@ -52,7 +63,6 @@ class Api {
 
   getRaces(hero) {
     const JSONdata = JSON.stringify(hero);
-    console.log("Api/race -> Server", hero);
     //console.log(`${this.url}/${hero}/races`);
     const request = new Request(`${this.url}/${hero}/races`, {
       method: "GET",
@@ -65,7 +75,6 @@ class Api {
 
   raceCards(hero, race) {
     //const JSONdata = JSON.stringify(race);
-    console.log("Api -> Server aa", race);
     const request = new Request(`${this.url}/${hero}/race/${race}`, {
       method: "GET",
     });
@@ -93,8 +102,6 @@ class Api {
 
   /* Remove --> DELETE */
   remove(id) {
-    console.log(`Removing task with id: ${id}`);
-
     return fetch(`${this.url}/${id}`, {
       method: "DELETE",
     })

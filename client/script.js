@@ -13,17 +13,22 @@ function renderMain() {
 
 function rederDeckBuilderCardCanvas(hero) {
   let cardCanvas = document.getElementById("cardCanvas");
-  console.log("index.js -> Api jag vill dom här korten", hero);
-
   api.getCards(hero).then((ids) => {
     cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids, hero));
   });
 }
 
+function updateDeckBuilderCardCanvasFromSearch(searchTerm) {
+  let cardCanvas = document.getElementById("cardCanvas");
+  cardCanvas.innerHTML = ``;
+  api
+    .searchCards(searchTerm)
+    .then((ids) => cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids)));
+}
+
 function updateDeckBuilderCardCanvas(hero, race) {
   let cardCanvas = document.getElementById("cardCanvas");
   cardCanvas.innerHTML = ``;
-  console.log("index.js -> Api jag vill dom här korten", race);
 
   api.raceCards(hero, race).then((ids) => {
     cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids));
@@ -31,22 +36,34 @@ function updateDeckBuilderCardCanvas(hero, race) {
 }
 
 function renderDeckBuilderClassButtons(hero) {
-  console.log("race till api", hero);
   let cardButton = document.getElementById("buttonList");
   api.getRaces(hero).then((races) => {
     cardButton.insertAdjacentHTML("afterbegin", deckBButtons(hero, races));
   });
 }
 
-function renderDeckBuilderLogo(hero) {
-  let cardLogo = document.getElementById("classLogo");
-  cardLogo.insertAdjacentHTML("afterend", deckBprev(hero));
+function renderDeckBuilderPrevDecks(hero) {
+  let cardPrevContainer = document.getElementById("prevDecksContainer");
+  cardPrevContainer.innerHTML = ``;
+  api.getSavedDeckNames(hero).then((deckNames) => {
+    cardPrevContainer.insertAdjacentHTML("afterbegin", deckBprev(deckNames));
+  });
 }
 
-function renderDeckBuilderPrevDecks(hero) {
-  let cardPrev = document.getElementById("prevDeck");
-  cardPrev.innerHTML = ``;
-  cardPrev.insertAdjacentHTML("afterend", deckBCurrentDeck(hero));
+function renderDeckBuilderCurrentDeckFromId(id) {
+  const currentDeck = document.getElementById("deckBuild");
+  currentDeck.remove();
+  let cardPrevContainer = document.getElementById("prevDecksContainer");
+  api
+    .getPrevDeck(id)
+    .then((ids) =>
+      cardPrevContainer.insertAdjacentHTML("afterend", deckBCards(ids))
+    );
+}
+
+function renderDeckBuilderCurrentDeck(hero) {
+  let cardPrevContainer = document.getElementById("prevDecksContainer");
+  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck(hero));
 }
 
 function renderDeckBuilder(hero) {
@@ -55,8 +72,8 @@ function renderDeckBuilder(hero) {
 
   rederDeckBuilderCardCanvas(hero);
   renderDeckBuilderClassButtons(hero);
-  renderDeckBuilderLogo(hero);
   renderDeckBuilderPrevDecks(hero);
+  renderDeckBuilderCurrentDeck(hero);
 }
 
 function raceClick(button) {
@@ -69,16 +86,11 @@ function raceClick(button) {
 
 function searchCard(e) {
   e.preventDefault();
-  let cardCanvas = document.getElementById("cardCanvas");
-  cardCanvas.innerHTML = ``;
-  api
-    .searchCards(searchField.value)
-    .then((ids) => cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids)));
+  updateDeckBuilderCardCanvasFromSearch(searchField.value);
 }
 
 //
 function addToDeck(li) {
-  console.log("skickar till api ->", li.id);
   let counter = 0;
   for (item of currentDeck.cards.flat()) {
     if (item == li.id) {
@@ -90,7 +102,7 @@ function addToDeck(li) {
 
     // currentDeck.innerHTML = ``;
     document.getElementById("deckBuild").remove();
-    renderDeckBuilderPrevDecks();
+    renderDeckBuilderCurrentDeck();
   }
 }
 
@@ -105,6 +117,11 @@ function removeCardCurrentDeck(li) {
 function cardCurrentDeckManageDeckButton(e) {
   e.preventDefault();
   const newDeckList = [];
+  const deckClass = document.getElementById("classHero").getAttribute("src");
+  let heroClass = deckClass.split("/");
+  heroClass = heroClass[4].split(".", 1);
+  heroClass = heroClass.toString().toUpperCase();
+
   const listElements = document
     .querySelector("#deckBuildList")
     .querySelectorAll("li");
@@ -113,7 +130,15 @@ function cardCurrentDeckManageDeckButton(e) {
   });
 
   const newDeckName = document.getElementById("deckBuildName").value;
-  api.createDeck(newDeckName, newDeckList).then((data) => console.log(data));
+  api
+    .createDeck(newDeckName, heroClass, newDeckList)
+    .then((data) => console.log(data));
+  renderDeckBuilderPrevDecks(heroClass);
+}
+
+function loadPrevDeck(button) {
+  const id = button.id;
+  api.getPrevDeck(id).then((deck) => renderDeckBuilderCurrentDeck(deck));
 }
 
 renderMain();

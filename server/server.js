@@ -29,12 +29,29 @@ app
     next();
   });
 
+app.post("/deck/savedDecks/:hero", async (req, res) => {
+  try {
+    let hero = req.body.hero;
+    const heroDecks = [];
+    //console.log("saved decks:", hero);
+    const listBuffer = await fs.readFile("./JSON/decks.json");
+    const decks = JSON.parse(listBuffer);
+    decks.forEach((deck) => {
+      if (deck.class == hero) {
+        heroDecks.push([deck.deckName, deck.id]);
+      }
+    });
+    res.send(JSON.stringify(heroDecks));
+  } catch (error) {
+    res.status(500).send({ error: error.stack });
+  }
+});
+
 app.post("/deck/search", async (req, res) => {
   try {
     let searchCards = [];
     let searchWords = req.body.searchString;
     searchWords = searchWords.toLowerCase();
-    //console.log(searchWords);
     const listBuffer = await fs.readFile("./JSON/cards.json");
     const cards = JSON.parse(listBuffer);
     cards.forEach((card) => {
@@ -61,7 +78,6 @@ app.get("/deck/:hero/race/:race", async (req, res) => {
     let raceCards = [];
     const listBuffer = await fs.readFile("./JSON/cards.json");
     const cards = JSON.parse(listBuffer);
-    console.log("Server har fått från race cards ->", race);
 
     cards.forEach((card) => {
       if (
@@ -92,7 +108,6 @@ app.get("/deck/:hero/races", async (req, res) => {
     let race = [];
     const listBuffer = await fs.readFile("./JSON/cards.json");
     const cards = JSON.parse(listBuffer);
-    console.log("Server har fått från race Api ->", hero);
     cards.forEach((card) => {
       if (card.hasOwnProperty("cardClass")) {
         if (card.cardClass == hero || card.cardClass == "NEUTRAL") {
@@ -117,7 +132,6 @@ app.get("/deck/:hero", async (req, res) => {
 
     const cards = JSON.parse(listBuffer);
     let herocards = [];
-    console.log("Server har fått från hero Api ->", hero);
 
     cards.forEach((card) => {
       if (
@@ -145,10 +159,6 @@ app.get("/deck/:hero", async (req, res) => {
 app.post("/deck", async (req, res) => {
   try {
     const body = req.body;
-    // const deckName = body[0];
-    // const deckList = body[1];
-    // console.log(deckName, deckList);
-
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const currentDecks = JSON.parse(listBuffer);
 
@@ -163,7 +173,12 @@ app.post("/deck", async (req, res) => {
       maxDeckId++;
     }
 
-    const newDeck = { id: maxDeckId, deckName: body[0], cards: body[1] };
+    const newDeck = {
+      id: maxDeckId,
+      deckName: body[0],
+      class: body[1],
+      cards: body[2],
+    };
     const deckList = currentDecks ? [...currentDecks, newDeck] : [newDeck];
     await fs.writeFile("./JSON/decks.json", JSON.stringify(deckList));
 
