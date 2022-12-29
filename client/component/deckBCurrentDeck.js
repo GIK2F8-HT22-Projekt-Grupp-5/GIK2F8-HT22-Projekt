@@ -7,6 +7,7 @@ function deckBCurrentDeck(incomingDeck) {
     deck = incomingDeck.cards;
     deckName = incomingDeck.deckName;
     console.log(deck);
+  } else if (incomingDeck.hasOwnProperty("id")) {
   } else {
     deck = incomingDeck;
   }
