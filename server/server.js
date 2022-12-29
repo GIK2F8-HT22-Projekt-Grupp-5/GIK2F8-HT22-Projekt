@@ -79,18 +79,15 @@ app.post("/deck/deckId/:id", async (req, res) => {
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const decks = JSON.parse(listBuffer);
     decks.forEach((deck) => {
-      if (deck.id == deckId) 
-      {
+      if (deck.id == deckId) {
         res.send(deck);
         return;
       }
     });
-    
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
 });
-
 
 app.get("/deck/:hero/race/:race", async (req, res) => {
   try {

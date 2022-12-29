@@ -45,7 +45,7 @@ function deckB(hero) {
              class="object-scale-down w-16">
        
       </div>
-      <div id="prevDecksContainer" class="row-span-1 border col-span-2 border ">
+      <div id="prevDecksContainer" class="row-span-1 col-span-2 ">
       </div>
     </section>
   </section>

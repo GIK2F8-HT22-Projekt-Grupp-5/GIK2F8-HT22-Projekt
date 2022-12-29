@@ -52,17 +52,16 @@ function renderDeckBuilderPrevDecks(hero) {
 
 function renderDeckBuilderCurrentDeckFromId(deck) {
   const currentDeck = document.getElementById("deckBuild");
+  console.log(deck);
   currentDeck.remove();
   let cardPrevContainer = document.getElementById("prevDecksContainer");
-  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck(deck))
-
-
-
+  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck(deck));
 }
 
-function renderDeckBuilderCurrentDeck(hero) {
+function renderDeckBuilderCurrentDeck(deck) {
+  console.log(deck);
   let cardPrevContainer = document.getElementById("prevDecksContainer");
-  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck());
+  cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck(deck));
 }
 
 function renderDeckBuilder(hero) {
@@ -72,7 +71,7 @@ function renderDeckBuilder(hero) {
   rederDeckBuilderCardCanvas(hero);
   renderDeckBuilderClassButtons(hero);
   renderDeckBuilderPrevDecks(hero);
-  renderDeckBuilderCurrentDeck(hero);
+  renderDeckBuilderCurrentDeck();
 }
 
 function raceClick(button) {
@@ -88,29 +87,37 @@ function searchCard(e) {
   updateDeckBuilderCardCanvasFromSearch(searchField.value);
 }
 
-//
 function addToDeck(li) {
   let counter = 0;
-  for (item of currentDeck.cards.flat()) {
-    if (item == li.id) {
-      counter++;
+  let currentDeck = [];
+  let currentDeckName = document.getElementById("deckBuildName").value;
+
+  const currentDeckList = document
+    .querySelector("#deckBuildList")
+    .querySelectorAll("li");
+  console.log(currentDeckList);
+  if (currentDeckList.length > 0) {
+    for (let index = 0; index < currentDeckList.length; index++) {
+      console.log("item", currentDeckList[index]);
+      currentDeck.push(currentDeckList[index].id);
+      if (currentDeckList[index].id == li.id) {
+        counter++;
+      }
     }
   }
-  if (currentDeck.cards.length < 30 && counter < 2) {
-    currentDeck.cards.push(li.id);
-
-    // currentDeck.innerHTML = ``;
+  if (currentDeckList.length < 30 && counter < 2) {
+    console.log("li.id", li.id);
+    currentDeck.push(li.id);
     document.getElementById("deckBuild").remove();
-    renderDeckBuilderCurrentDeck();
+    renderDeckBuilderCurrentDeck({
+      deckName: currentDeckName,
+      cards: currentDeck,
+    });
   }
 }
 
-function removeCardCurrentDeck(li) {
-  const index = currentDeck.cards.indexOf(li.id);
-  currentDeck.cards.splice(index, 1);
-
-  document.getElementById("deckBuild").remove();
-  renderDeckBuilderPrevDecks();
+function removeCardFromCurrentDeckList(li) {
+  document.getElementById("deckBuildList").removeChild(li);
 }
 
 function cardCurrentDeckManageDeckButton(e) {
@@ -136,6 +143,7 @@ function cardCurrentDeckManageDeckButton(e) {
 }
 
 function loadPrevDeck(button) {
+  console.log(button.id);
   const id = button.id;
   api.getDeckById(id).then((deck) => renderDeckBuilderCurrentDeckFromId(deck));
 }

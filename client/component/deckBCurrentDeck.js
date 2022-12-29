@@ -1,44 +1,50 @@
-const currentDeck = { deckName: "New Deck", cards: [] };
-
-function deckBCurrentDeck(deck) {
-  if (deck === undefined)
-  {
-    deck = currentDeck;
+function deckBCurrentDeck(incomingDeck) {
+  let deckName = "New deck";
+  let deck = [];
+  if (incomingDeck === undefined) {
+    // The global undefined property represents the primitive value undefined. It is one of JavaScript's primitive types.
+  } else if (incomingDeck.hasOwnProperty("cards")) {
+    deck = incomingDeck.cards;
+    deckName = incomingDeck.deckName;
+    console.log(deck);
+  } else {
+    deck = incomingDeck;
   }
   html = `
-        <!-- Flexbox 2.5 kort i nuvarande kortlek -->
-      <form
-        id="deckBuild" 
-        class="justify-between bg-sky-900 bg-opacity-50 rounded-xl 
-               row-span-5 p-0 col-span-4 flex flex-col items-center"
-        name="save"
-        onsubmit="cardCurrentDeckManageDeckButton(event)"
-      >
+  <form
+  id="deckBuild" 
+  class="justify-between bg-sky-900 bg-opacity-50 rounded-xl 
+  row-span-5 p-0 col-span-4 flex flex-col items-center"
+  name="save"
+  onsubmit="cardCurrentDeckManageDeckButton(event)"
+  >
+  <!-- Flexbox 2.5 kort i nuvarande kortlek -->
           <div class="sticky top-0 ">
             <input
             id="deckBuildName"
             class=" bg-sky-900 bg-opacity-50 w-full rounded text-center text-sm break-all"
             type="text"
-            value="${deck.deckName}">
+            value="${deckName}">
           </div>
           <ul
             id="deckBuildList"
             class="bg-sky-900 bg-opacity-50 rounded-xl flex flex-col gap-2 items-center overflow-y-scroll"
           >
   `;
-  deck.cards.forEach((card) => {
-    html += `
+  if (deck.length > 0) {
+    deck.forEach((card) => {
+      html += `
           <li id="${card}"
               class="flex-1"
-              onclick="removeCardCurrentDeck(this)">
+              onclick="removeCardFromCurrentDeckList(this)">
               <img
                   src="https://art.hearthstonejson.com/v1/tiles/${card}.webp"
                   class="rounded-xl "
               />
           </li>
     `;
-  });
-
+    });
+  }
   html += `
           </ul>
           <button class="bg-sky-900 bg-opacity-50 rounded-xl 
