@@ -13,6 +13,7 @@ function renderMain() {
 
 function rederDeckBuilderCardCanvas(hero) {
   let cardCanvas = document.getElementById("cardCanvas");
+  cardCanvas.innerHTML = ``;
   api.getCards(hero).then((ids) => {
     cardCanvas.insertAdjacentHTML("beforeend", deckBCards(ids, hero));
   });
@@ -52,7 +53,7 @@ function renderDeckBuilderPrevDecks(hero) {
 
 function renderDeckBuilderCurrentDeckFromId(deck) {
   const currentDeck = document.getElementById("deckBuild");
-  console.log(deck);
+  //console.log(deck);
   currentDeck.remove();
   let cardPrevContainer = document.getElementById("prevDecksContainer");
   cardPrevContainer.insertAdjacentHTML("afterend", deckBCurrentDeck(deck));
@@ -91,11 +92,11 @@ function addToDeck(li) {
   let counter = 0;
   let currentDeck = [];
   let currentDeckName = document.getElementById("deckBuildName").value;
-
+  let deckId = document.getElementById("deckBuild").name;
   const currentDeckList = document
     .querySelector("#deckBuildList")
     .querySelectorAll("li");
-  console.log(currentDeckList);
+  //console.log(currentDeckList);
   if (currentDeckList.length > 0) {
     for (let index = 0; index < currentDeckList.length; index++) {
       console.log("item", currentDeckList[index]);
@@ -110,6 +111,7 @@ function addToDeck(li) {
     currentDeck.push(li.id);
     document.getElementById("deckBuild").remove();
     renderDeckBuilderCurrentDeck({
+      id: deckId,
       deckName: currentDeckName,
       cards: currentDeck,
     });
@@ -122,6 +124,7 @@ function removeCardFromCurrentDeckList(li) {
 
 function cardCurrentDeckManageDeckButton(e) {
   e.preventDefault();
+  const deckId = document.getElementById("deckBuild").name;
   const newDeckList = [];
   const deckClass = document.getElementById("classHero").getAttribute("src");
   let heroClass = deckClass.split("/");
@@ -136,10 +139,15 @@ function cardCurrentDeckManageDeckButton(e) {
   });
 
   const newDeckName = document.getElementById("deckBuildName").value;
-  api
-    .createDeck(newDeckName, heroClass, newDeckList)
-    .then((data) => console.log(data));
-  renderDeckBuilderPrevDecks(heroClass);
+  if (deckId === -1) {
+    api
+      .createDeck(newDeckName, heroClass, newDeckList)
+      .then((data) => console.log(data));
+    renderDeckBuilderPrevDecks(heroClass);
+  } else {
+    api.updateDeck(deckId, newDeckList).then((data) => console.log(data));
+    renderDeckBuilderPrevDecks(heroClass);
+  }
 }
 
 function loadPrevDeck(button) {

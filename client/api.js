@@ -33,9 +33,12 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  updateDeck(id) {
-    return fetch(`${this.url}/${id}`, {
+  updateDeck(deckId, newDeckList) {
+    const JSONData = JSON.stringify({ id: deckId, cards: newDeckList });
+    return fetch(`${this.url}/:id`, {
       method: "PATCH",
+      body: JSONData,
+      headers: { "content-type": "application/json" },
     })
       .then((result) => result.json())
       .catch((err) => console.log(err));
@@ -100,7 +103,7 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  getDeckById(id){
+  getDeckById(id) {
     const JSONData = JSON.stringify({ id: id });
     const request = new Request(`${this.url}/deckId/${id}`, {
       method: "POST",
@@ -111,7 +114,7 @@ class Api {
       .then((result) => result.json())
       .then((data) => data)
       .catch((err) => console.log(err));
-  }    
+  }
 
   /* Remove --> DELETE */
   remove(id) {

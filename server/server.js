@@ -206,21 +206,18 @@ app.post("/deck", async (req, res) => {
 });
 
 app.patch("/deck/:id", async (req, res) => {
-  const id = req.params.id;
+  const id = req.body.id;
   try {
-    /*const listBuffer = await fs.readFile("./tasks.json");
-      const currentTasks = JSON.parse(listBuffer);
+    const listBuffer = await fs.readFile("./JSON/decks.json");
+    const currentDecks = JSON.parse(listBuffer);
 
-      currentTasks.forEach(task => {
-          if(task.id == id && task.completed == false){
-              task.completed = true;
-          } 
-          else if(task.id == id && task.completed == true){
-              task.completed = false;
-          }
-      });
-      
-      await fs.writeFile('./tasks.json',JSON.stringify(currentTasks));*/
+    currentDecks.forEach((deck) => {
+      if (deck.id == id) {
+        deck.cards = req.body.cards;
+      }
+    });
+
+    await fs.writeFile("./JSON/decks.json", JSON.stringify(currentDecks));
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
