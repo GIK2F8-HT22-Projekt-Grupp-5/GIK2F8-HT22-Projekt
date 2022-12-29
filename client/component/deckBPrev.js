@@ -10,7 +10,7 @@ function deckBprev(deckNames) {
     html += `<li 
             
             
-            class="bg-sky-900 bg-opacity-50 rounded-xl flex grow items-center justify-center">
+            class="text-sm  bg-sky-900 bg-opacity-50 rounded-xl flex grow items-center justify-center">
             <button id="${deck[1]}" onclick="loadPrevDeck(this)">${deck[0]}</button>
         </li>`;
   });

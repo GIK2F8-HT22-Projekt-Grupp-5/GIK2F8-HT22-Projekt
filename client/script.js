@@ -148,4 +148,12 @@ function loadPrevDeck(button) {
   api.getDeckById(id).then((deck) => renderDeckBuilderCurrentDeckFromId(deck));
 }
 
+function loadClassCardsIntoCanvas(hero) {
+  const deckClass = document.getElementById("classHero").getAttribute("src");
+  let heroClass = deckClass.split("/");
+  heroClass = heroClass[4].split(".", 1);
+  heroClass = heroClass.toString().toUpperCase();
+  rederDeckBuilderCardCanvas(heroClass);
+}
+
 renderMain();

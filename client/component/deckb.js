@@ -39,10 +39,12 @@ function deckB(hero) {
       <div
       id="classLogo" 
       class="row-span-1 col-span-1 flex flex-row gap-2 justify-between">
-        <img id="classHero" src="http://localhost:5000/images/${hero.toLowerCase()}.webp" 
-             class="object-scale-down w-16 order-last">
-             <img id="classHero" src="http://localhost:5000/images/${hero.toLowerCase()}.webp" 
-             class="object-scale-down w-16">
+        <img src="http://localhost:5000/images/back.png" 
+             class="object-scale-down w-16 order-last"
+             onclick="renderMain()">
+             <img id="classHero" src="http://localhost:5000/images/${hero.toLowerCase()}.webp"
+             class="object-scale-down w-16"
+             onclick="loadClassCardsIntoCanvas(this)">
        
       </div>
       <div id="prevDecksContainer" class="row-span-1 col-span-2 ">
