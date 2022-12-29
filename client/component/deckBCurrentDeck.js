@@ -1,6 +1,10 @@
-const currentDeck = { deckName: "TempDeck", cards: [] };
+const currentDeck = { deckName: "New Deck", cards: [] };
 
-function deckBCurrentDeck() {
+function deckBCurrentDeck(deck) {
+  if (deck === undefined)
+  {
+    deck = currentDeck;
+  }
   html = `
         <!-- Flexbox 2.5 kort i nuvarande kortlek -->
       <form
@@ -15,14 +19,14 @@ function deckBCurrentDeck() {
             id="deckBuildName"
             class=" bg-sky-900 bg-opacity-50 w-full rounded text-center text-sm break-all"
             type="text"
-            value="${currentDeck.deckName}">
+            value="${deck.deckName}">
           </div>
           <ul
             id="deckBuildList"
             class="bg-sky-900 bg-opacity-50 rounded-xl flex flex-col gap-2 items-center overflow-y-scroll"
           >
   `;
-  currentDeck.cards.forEach((card) => {
+  deck.cards.forEach((card) => {
     html += `
           <li id="${card}"
               class="flex-1"

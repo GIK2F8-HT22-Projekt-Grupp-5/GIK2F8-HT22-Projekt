@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
     {
         "id": 1,
@@ -311,3 +312,6 @@
         ]
     }
 ]
+=======
+[{"id":1,"deckName":"TempDeck","class":"PALADIN","cards":["AT_081","AT_079","AT_078","AT_077","AT_073","AT_074","AT_075"]},{"id":2,"deckName":"aaa","class":"PALADIN","cards":["AT_081","AT_079","AT_078","AT_077","AT_073","AT_074","AT_075"]},{"id":3,"deckName":"EMIL","class":"PALADIN","cards":["AT_081","AT_079","AT_078","AT_077","AT_073","AT_074","AT_075"]},{"id":4,"deckName":"DANNE","class":"PALADIN","cards":["AT_081","AT_079","AT_078","AT_077","AT_073","AT_074","AT_075"]},{"id":5,"deckName":"SKRIDSKOSEBBE","class":"PALADIN","cards":["AT_081","AT_079","AT_078","AT_077","AT_073","AT_074","AT_075"]},{"id":6,"deckName":"Nya Decken","class":"PALADIN","cards":["BAR_550t","BAR_550","AT_078","AT_079","AT_074","AT_073","AT_077","AT_078","AT_079","BAR_871"]},{"id":7,"deckName":"Emil 2.0","class":"PALADIN","cards":["BG21_020","BAR_545","BAR_545","AT_092","BAR_042","BAR_042","BAR_045","BAR_045","BAR_848","BAR_848","BAR_750","BAR_750","BG21_020"]},{"id":8,"deckName":"testar1","class":"PALADIN","cards":["BG21_022_G","BG21_025","BG21_025","BG21_025_G","BG21_025_G","BG21_023_G","BG21_022_G"]},{"id":9,"deckName":"TempDeck","class":"PALADIN","cards":["AT_081","AT_075","AT_074","AT_073","AT_078"]},{"id":10,"deckName":"10","class":"PALADIN","cards":["AT_077","AT_078","BAR_550","AT_104","BAR_871","AT_081","AT_079"]}]
+>>>>>>> 3e628240ef22ea817f6a14d518588fc54f2ebcb9

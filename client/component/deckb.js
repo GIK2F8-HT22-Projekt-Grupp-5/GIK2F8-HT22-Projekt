@@ -38,10 +38,14 @@ function deckB(hero) {
       <!-- Grid 2.3 Logga class-->
       <div
       id="classLogo" 
-      class="row-span-1 col-span-1 flex justify-start gap-2">
-        <img src="http://localhost:5000/images/${hero.toLowerCase()}.webp" 
-             class="object-scale-down w-16" 
-        />
+      class="row-span-1 col-span-1 flex flex-row gap-2 justify-between">
+        <img id="classHero" src="http://localhost:5000/images/${hero.toLowerCase()}.webp" 
+             class="object-scale-down w-16 order-last">
+             <img id="classHero" src="http://localhost:5000/images/${hero.toLowerCase()}.webp" 
+             class="object-scale-down w-16">
+       
+      </div>
+      <div id="prevDecksContainer" class="row-span-1 border col-span-2 border ">
       </div>
     </section>
   </section>
