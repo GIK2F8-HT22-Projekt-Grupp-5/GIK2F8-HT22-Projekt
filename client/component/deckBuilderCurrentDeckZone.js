@@ -1,4 +1,4 @@
-function deckBCurrentDeck(incomingDeck) {
+function deckBuilderCurrentDeckZone(incomingDeck) {
   let deckName = "New deck";
   let deck = [];
   let id = -1;
@@ -36,7 +36,7 @@ function deckBCurrentDeck(incomingDeck) {
     html += `${id}`;
   }
   html += `"
-  onsubmit="cardCurrentDeckManageDeckButton(event)"
+  onsubmit="deckBuilderCurrentDeckZoneManageDeckButton(event)"
   >
   <!-- Flexbox 2.5 kort i nuvarande kortlek -->
           <div class="sticky top-0 ">
@@ -67,12 +67,27 @@ function deckBCurrentDeck(incomingDeck) {
   }
   html += `
           </ul>
-          <button class="bg-sky-900 bg-opacity-50 rounded-xl 
-                         text-sm break-all order-last"
-                  type="submit"
-                  name="submitButton"   
-          >
-          Save Current Deck</button>
+          <div flex flex-row>
+            <button class="flex grow bg-sky-900 bg-opacity-50 rounded-xl 
+            text-sm break-all"
+            type="button"
+            onclick="startNewDeck()"
+            name="NewButton">
+            New Deck</button>
+
+            <button class="flex grow bg-sky-900 bg-opacity-50 rounded-xl 
+            text-sm break-all"
+            type="submit"
+            name="submitButton">
+            Save Current Deck</button>
+
+            <button class="flex grow bg-sky-900 bg-opacity-50 rounded-xl 
+            text-sm break-all"
+            type="button"
+            onclick="deleteDeck()"
+            name="DelButton">
+            Delete Deck</button>
+          </div>
         </form>  
       `;
   return html;

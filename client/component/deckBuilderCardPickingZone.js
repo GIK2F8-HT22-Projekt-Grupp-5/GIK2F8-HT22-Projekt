@@ -1,4 +1,4 @@
-function deckBCards(cardIds) {
+function deckBuilderCardPickingZone(cardIds) {
   //console.log(cardIds);
   let html = `
     <!-- Flexbox 1.1 -->
@@ -9,7 +9,7 @@ function deckBCards(cardIds) {
       <li
       id="${id}"
       class="list-none inline-block w-1/4 flex items-center justify-center "
-      onclick="addToDeck(this)">
+      onclick="addCardToCurrentDeckList(this)">
       <img
         src="
           https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${id}.png

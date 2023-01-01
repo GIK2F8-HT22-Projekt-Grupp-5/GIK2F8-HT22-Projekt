@@ -33,8 +33,8 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  updateDeck(deckId, newDeckList) {
-    const JSONData = JSON.stringify({ id: deckId, cards: newDeckList });
+  updateDeck(deckName, deckId, newDeckList) {
+    const JSONData = JSON.stringify({ id: deckId, name: deckName, cards: newDeckList });
     return fetch(`${this.url}/:id`, {
       method: "PATCH",
       body: JSONData,

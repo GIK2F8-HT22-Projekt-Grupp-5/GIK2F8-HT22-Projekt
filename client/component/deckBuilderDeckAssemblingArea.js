@@ -1,4 +1,4 @@
-function deckB(hero) {
+function deckBuilderDeckAssemblingArea(hero) {
   let hmtl = `
   <section
   class="w-4/5 h-4/5 relative z-30 p-5 text-2xl text-white bg-sky-400 bg-opacity-50 rounded-xl"
@@ -41,10 +41,10 @@ function deckB(hero) {
       class="row-span-1 col-span-1 flex flex-row gap-2 justify-between">
         <img src="http://localhost:5000/images/back.png" 
              class="object-scale-down w-16 order-last"
-             onclick="renderMain()">
+             onclick="renderDeckBuilderClassSelectionArea()">
              <img id="classHero" src="http://localhost:5000/images/${hero.toLowerCase()}.webp"
              class="object-scale-down w-16"
-             onclick="loadClassCardsIntoCanvas(this)">
+             onclick="loadClassCardsIntoDeckBuilderCardPickingZone()">
        
       </div>
       <div id="prevDecksContainer" class="row-span-1 col-span-2 ">

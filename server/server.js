@@ -33,7 +33,6 @@ app.post("/deck/savedDecks/:hero", async (req, res) => {
   try {
     let hero = req.body.hero;
     const heroDecks = [];
-    //console.log("saved decks:", hero);
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const decks = JSON.parse(listBuffer);
     decks.forEach((deck) => {
@@ -174,8 +173,8 @@ app.get("/deck/:hero", async (req, res) => {
 });
 
 app.post("/deck", async (req, res) => {
+  const body = req.body;
   try {
-    const body = req.body;
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const currentDecks = JSON.parse(listBuffer);
 
@@ -199,10 +198,11 @@ app.post("/deck", async (req, res) => {
     const deckList = currentDecks ? [...currentDecks, newDeck] : [newDeck];
     await fs.writeFile("./JSON/decks.json", JSON.stringify(deckList));
 
-    res.send(`Deck ${body[0]} saved`);
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
+
+  res.send({message:`Deck ${body[0]} saved`});
 });
 
 app.patch("/deck/:id", async (req, res) => {
@@ -214,6 +214,7 @@ app.patch("/deck/:id", async (req, res) => {
     currentDecks.forEach((deck) => {
       if (deck.id == id) {
         deck.cards = req.body.cards;
+        deck.deckName = req.body.name;
       }
     });
 
@@ -222,22 +223,29 @@ app.patch("/deck/:id", async (req, res) => {
     res.status(500).send({ error: error.stack });
   }
 
-  res.send({ messege: `Uppgiften med id: ${id} uppdaterades` });
+  res.send({ messege: `Deck med id: ${id} uppdaterades` });
 });
 
 app.delete("/deck/:id", async (req, res) => {
-  /*localhost:5000/task/id*/
-  /* const id = req.params.id;*/
+  
+  const id = req.params.id;
   try {
-    /*const listBuffer = await fs.readFile("./tasks.json");
-        const currentTasks = JSON.parse(listBuffer);
-        if (currentTasks.length > 0) {
-            await fs.writeFile("./tasks.json",JSON.stringify(currentTasks.filter(task => task.id != id )));
-            res.send({messege:`Uppgiften med id: ${id} togs bort`});
+    let heroClass="";
+    const listBuffer = await fs.readFile("./JSON/decks.json");
+    const currentDecks = JSON.parse(listBuffer);
+    if (currentDecks.length > 0) {
+      currentDecks.forEach((deck) =>{
+        if (deck.id == id)
+        {
+          heroClass = deck.class;
         }
-        else{
-            res.status(404).send({error: 'Ingen uppgift att ta bort'});
-        }*/
+      });
+      await fs.writeFile("./JSON/decks.json",JSON.stringify(currentDecks.filter(deck =>deck.id != id)));
+      res.send({messege:`Deck med id: ${id} togs bort`,class: heroClass});
+    }
+    else{
+        res.status(404).send({error: 'Ingen uppgift att ta bort'});
+    }
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
