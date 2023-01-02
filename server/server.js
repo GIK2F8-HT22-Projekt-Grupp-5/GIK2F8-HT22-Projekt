@@ -29,9 +29,10 @@ app
     next();
   });
 
-app.post("/deck/savedDecks/:hero", async (req, res) => {
+//Hämtar namn och id för knapparna som visar sparade decks från respektive hero.
+app.get("/deck/savedDecks/:hero", async (req, res) => {
   try {
-    let hero = req.body.hero;
+    let hero = req.params.hero;
     const heroDecks = [];
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const decks = JSON.parse(listBuffer);
@@ -46,11 +47,11 @@ app.post("/deck/savedDecks/:hero", async (req, res) => {
   }
 });
 
-app.post("/deck/search", async (req, res) => {
+// Hämtar (postar) kort baserat på sökterm
+app.get("/deck/search/:searchTerm", async (req, res) => {
   try {
     let searchCards = [];
-    let searchWords = req.body.searchString;
-    searchWords = searchWords.toLowerCase();
+    let searchWords = req.params.searchTerm.toLowerCase();
     const listBuffer = await fs.readFile("./JSON/cards.json");
     const cards = JSON.parse(listBuffer);
     cards.forEach((card) => {
@@ -72,9 +73,10 @@ app.post("/deck/search", async (req, res) => {
   }
 });
 
-app.post("/deck/deckId/:id", async (req, res) => {
+// Hämtar deck med hjälp av angivet ID
+app.get("/deck/deckId/:id", async (req, res) => {
   try {
-    const deckId = req.body.id;
+    const deckId = req.params.id;
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const decks = JSON.parse(listBuffer);
     decks.forEach((deck) => {
@@ -88,6 +90,7 @@ app.post("/deck/deckId/:id", async (req, res) => {
   }
 });
 
+// Hämtar kort från vald ras för aktuell Hero
 app.get("/deck/:hero/race/:race", async (req, res) => {
   try {
     const race = req.params.race;
@@ -118,6 +121,7 @@ app.get("/deck/:hero/race/:race", async (req, res) => {
   }
 });
 
+// Hämtar de raser som kan användas av vald hero
 app.get("/deck/:hero/races", async (req, res) => {
   try {
     const hero = req.params.hero;
@@ -140,15 +144,13 @@ app.get("/deck/:hero/races", async (req, res) => {
   }
 });
 
+// Hämtar kort som är unika för vald hero
 app.get("/deck/:hero", async (req, res) => {
   try {
     const hero = req.params.hero;
-
     const listBuffer = await fs.readFile("./JSON/cards.json");
-
     const cards = JSON.parse(listBuffer);
     let herocards = [];
-
     cards.forEach((card) => {
       if (
         card.type != "HERO" &&
@@ -172,13 +174,13 @@ app.get("/deck/:hero", async (req, res) => {
   }
 });
 
+// Skapar en deck
 app.post("/deck", async (req, res) => {
   const body = req.body;
   try {
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const currentDecks = JSON.parse(listBuffer);
-
-    // sätter id
+    // sätter unikt ID
     let maxDeckId = 1;
     if (currentDecks && currentDecks.length > 0) {
       maxDeckId = currentDecks.reduce(
@@ -188,7 +190,6 @@ app.post("/deck", async (req, res) => {
       );
       maxDeckId++;
     }
-
     const newDeck = {
       id: maxDeckId,
       deckName: body[0],
@@ -197,14 +198,13 @@ app.post("/deck", async (req, res) => {
     };
     const deckList = currentDecks ? [...currentDecks, newDeck] : [newDeck];
     await fs.writeFile("./JSON/decks.json", JSON.stringify(deckList));
-
+    res.send({ message: `Deck ${body[0]} saved`, id: maxDeckId });
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
-
-  res.send({message:`Deck ${body[0]} saved`});
 });
 
+// Uppdaterar deck med visst ID
 app.patch("/deck/:id", async (req, res) => {
   const id = req.body.id;
   try {
@@ -219,32 +219,32 @@ app.patch("/deck/:id", async (req, res) => {
     });
 
     await fs.writeFile("./JSON/decks.json", JSON.stringify(currentDecks));
+    res.send({ messege: `Deck med id: ${id} uppdaterades` });
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
-
-  res.send({ messege: `Deck med id: ${id} uppdaterades` });
 });
 
+// Tar bort Deck med angivet ID
 app.delete("/deck/:id", async (req, res) => {
-  
   const id = req.params.id;
   try {
-    let heroClass="";
+    let heroClass = "";
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const currentDecks = JSON.parse(listBuffer);
     if (currentDecks.length > 0) {
-      currentDecks.forEach((deck) =>{
-        if (deck.id == id)
-        {
+      currentDecks.forEach((deck) => {
+        if (deck.id == id) {
           heroClass = deck.class;
         }
       });
-      await fs.writeFile("./JSON/decks.json",JSON.stringify(currentDecks.filter(deck =>deck.id != id)));
-      res.send({messege:`Deck med id: ${id} togs bort`,class: heroClass});
-    }
-    else{
-        res.status(404).send({error: 'Ingen uppgift att ta bort'});
+      await fs.writeFile(
+        "./JSON/decks.json",
+        JSON.stringify(currentDecks.filter((deck) => deck.id != id))
+      );
+      res.send({ messege: `Deck med id: ${id} togs bort`, class: heroClass });
+    } else {
+      res.status(404).send({ error: "Ingen uppgift att ta bort" });
     }
   } catch (error) {
     res.status(500).send({ error: error.stack });

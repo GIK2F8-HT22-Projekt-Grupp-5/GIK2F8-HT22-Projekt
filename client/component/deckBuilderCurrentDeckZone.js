@@ -2,15 +2,8 @@ function deckBuilderCurrentDeckZone(incomingDeck) {
   let deckName = "New deck";
   let deck = [];
   let id = -1;
-  //console.log("inc", incomingDeck);
-  // if (incomingDeck.hasOwnProperty("id")) {
-  //   console.log("if");
-  // } else {
-  //   console.log("else");
-  // }
 
   if (incomingDeck === undefined) {
-    // The global undefined property represents the primitive value undefined. It is one of JavaScript's primitive types.
   } else {
     if (incomingDeck.hasOwnProperty("cards")) {
       deck = incomingDeck.cards;
@@ -18,7 +11,6 @@ function deckBuilderCurrentDeckZone(incomingDeck) {
     }
     if (incomingDeck.hasOwnProperty("id")) {
       id = incomingDeck.id;
-      //console.log("h", id);
     } else {
       deck = incomingDeck;
     }
@@ -28,7 +20,7 @@ function deckBuilderCurrentDeckZone(incomingDeck) {
   <form
   id="deckBuild" 
   class="justify-between bg-sky-900 bg-opacity-50 rounded-xl 
-  row-span-5 p-0 col-span-4 flex flex-col items-center"
+  row-span-5 col-span-1 flex flex-col"
   name="`;
   if (id === -1) {
     html += `-1`;
@@ -39,13 +31,13 @@ function deckBuilderCurrentDeckZone(incomingDeck) {
   onsubmit="deckBuilderCurrentDeckZoneManageDeckButton(event)"
   >
   <!-- Flexbox 2.5 kort i nuvarande kortlek -->
-          <div class="sticky top-0 ">
+          
             <input
             id="deckBuildName"
-            class=" bg-sky-900 bg-opacity-50 w-full rounded text-center text-sm break-all"
+            class="bg-sky-900 bg-opacity-50 rounded text-center text-sm"
             type="text"
             value="${deckName}">
-          </div>
+          
           <ul
             id="deckBuildList"
             class="bg-sky-900 bg-opacity-50 rounded-xl flex flex-col gap-2 items-center overflow-y-scroll"
@@ -55,7 +47,7 @@ function deckBuilderCurrentDeckZone(incomingDeck) {
     deck.forEach((card) => {
       html += `
           <li id="${card}"
-              class="flex-1"
+              class=""
               onclick="removeCardFromCurrentDeckList(this)">
               <img
                   src="https://art.hearthstonejson.com/v1/tiles/${card}.webp"
@@ -67,26 +59,26 @@ function deckBuilderCurrentDeckZone(incomingDeck) {
   }
   html += `
           </ul>
-          <div flex flex-row>
+          <div class="flex flex-row gap-1 items-center justify-center">
             <button class="flex grow bg-sky-900 bg-opacity-50 rounded-xl 
-            text-sm break-all"
+            text-sm break-all  items-center justify-center p-2"
             type="button"
             onclick="startNewDeck()"
             name="NewButton">
-            New Deck</button>
+            New</button>
 
             <button class="flex grow bg-sky-900 bg-opacity-50 rounded-xl 
-            text-sm break-all"
+            text-sm break-all items-center justify-center p-2" 
             type="submit"
             name="submitButton">
-            Save Current Deck</button>
+            Save</button>
 
-            <button class="flex grow bg-sky-900 bg-opacity-50 rounded-xl 
-            text-sm break-all"
+            <button class="flex grow  bg-sky-900 bg-opacity-50 rounded-xl 
+            text-sm break-all items-center justify-center p-2"
             type="button"
             onclick="deleteDeck()"
             name="DelButton">
-            Delete Deck</button>
+            Delete</button>
           </div>
         </form>  
       `;
