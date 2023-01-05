@@ -1,13 +1,6 @@
 const cardLocale = `enUS`;
 const cardResolution = `512x`;
-// let cardID = ``; //Behöver få id dynamiskt senare
 const cardExt = `png`;
-//const cardUrl = `https://art.hearthstonejson.com/v1/render/latest/${cardLocale}/${cardResolution}/${cardID}.${cardExt}`;
-/* https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_003.png */
-/* https://art.hearthstonejson.com/v1/render/latest/{LOCALE}/{RESOLUTION}/{CARD_ID}.{EXT} */
-
-//const cardSmallUrl = `https://art.hearthstonejson.com/v1/tiles/${cardID}.${cardExt}`;
-/* https://art.hearthstonejson.com/v1/tiles/SW_003.png */
 
 const { error, count } = require("console");
 const { KeyObject } = require("crypto");
@@ -29,7 +22,7 @@ app
     next();
   });
 
-// Skapar en deck
+//Post, Skapar en deck
 app.post("/deck", async (req, res) => {
   const body = req.body;
   try {
@@ -59,7 +52,7 @@ app.post("/deck", async (req, res) => {
   }
 });
 
-// Uppdaterar deck med visst ID
+//Patch, Uppdaterar deck med visst ID
 app.patch("/deck/:id", async (req, res) => {
   const deckId = req.body.id;
   try {
@@ -76,14 +69,14 @@ app.patch("/deck/:id", async (req, res) => {
     await fs.writeFile("./JSON/decks.json", JSON.stringify(currentDecks));
     res.send({
       messege: `Deck med id: ${deckId} uppdaterades`,
-      id: `${deckId}`,
+      id: deckId,
     });
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
 });
 
-// Tar bort Deck med angivet ID
+//Delete, Tar bort deck med angivet ID
 app.delete("/deck/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -109,7 +102,7 @@ app.delete("/deck/:id", async (req, res) => {
   }
 });
 
-//Hämtar namn och id för knapparna som visar sparade decks från respektive hero.
+//Get, Hämtar namn och id för knapparna som visar sparade decks från respektive hero.
 app.get("/deck/savedDecks/:hero", async (req, res) => {
   try {
     let hero = req.params.hero;

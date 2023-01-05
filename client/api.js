@@ -5,14 +5,13 @@ class Api {
     this.url = url;
   }
 
-  // Skapar en deck
+  //Post, Skapar en deck
   createDeck(deckName, heroClass, deckList) {
     const JSONdata = JSON.stringify({
       name: deckName,
       class: heroClass,
       cards: deckList,
     });
-    //const JSONdata = JSON.stringify([deckName, heroClass, deckList]);
     const request = new Request(this.url, {
       method: "POST",
       body: JSONdata,
@@ -24,18 +23,7 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  //Hämtar namn och id för knapparna som visar sparade decks från respektive hero.
-  getDeckNames(heroClass) {
-    const request = new Request(`${this.url}/savedDecks/${heroClass}`, {
-      method: "GET",
-    });
-    return fetch(request)
-      .then((result) => result.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-
-  //Uppdaterar deck med ett visst ID
+  //Patch, Uppdaterar deck med ett visst ID
   updateDeck(deckName, deckId, newDeckList) {
     const JSONData = JSON.stringify({
       id: deckId,
@@ -51,6 +39,27 @@ class Api {
       .catch((err) => console.log(err));
   }
 
+  //Delete, Tar bort Deck med angivet ID
+  deleteDeck(id) {
+    return fetch(`${this.url}/${id}`, {
+      method: "DELETE",
+    })
+      .then((result) => result.json())
+      .catch((err) => console.log(err));
+  }
+
+  //Get, Hämtar namn och id för knapparna som visar sparade decks från respektive hero.
+  getDeckNames(heroClass) {
+    const request = new Request(`${this.url}/savedDecks/${heroClass}`, {
+      method: "GET",
+    });
+    return fetch(request)
+      .then((result) => result.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  //-------------------------
   // Hämtar kort som är unika för vald hero
   getCardsForHero(hero) {
     const request = new Request(`${this.url}/${hero}`, {
@@ -103,15 +112,6 @@ class Api {
     return fetch(request)
       .then((result) => result.json())
       .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-
-  // Tar bort Deck med angivet ID
-  deleteDeck(id) {
-    return fetch(`${this.url}/${id}`, {
-      method: "DELETE",
-    })
-      .then((result) => result.json())
       .catch((err) => console.log(err));
   }
 }
