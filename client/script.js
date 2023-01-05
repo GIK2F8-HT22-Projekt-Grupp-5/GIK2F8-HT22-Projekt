@@ -104,6 +104,7 @@ function updateDeckBuilderCardPickingZoneClick(button) {
   race = info[0];
   hero = info[1];
   updateDeckBuilderCardPickingZone(hero, race);
+  document.getElementById("searchField").value = "";
 }
 
 // onclick funktion i html som kör "updateDeckBuilderCardPickingZoneFromSearch" för att visa kort.
@@ -189,6 +190,7 @@ function loadClassCardsIntoDeckBuilderCardPickingZone() {
   heroClass = heroClass[4].split(".", 1);
   heroClass = heroClass.toString().toUpperCase();
   rederDeckBuilderCardPickingZone(heroClass);
+  document.getElementById("searchField").value = "";
 }
 
 // onclick funktion för att börja bygga en ny deck
