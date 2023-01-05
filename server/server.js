@@ -46,7 +46,7 @@ app.post("/deck", async (req, res) => {
     };
     const deckList = currentDecks ? [...currentDecks, newDeck] : [newDeck];
     await fs.writeFile("./JSON/decks.json", JSON.stringify(deckList));
-    res.send({ message: `Deck ${body[0]} saved`, id: maxDeckId });
+    res.send({ message: `Deck ${body.name} saved`, id: maxDeckId });
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }
