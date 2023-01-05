@@ -165,17 +165,18 @@ function deckBuilderCurrentDeckZoneManageDeckButton(e) {
     api.createDeck(newDeckName, heroClass, newDeckList).then((data) => {
       document.getElementById("deckBuild").name = data.id;
       renderDeckBuilderPreviousDeckZone(heroClass);
+      loadPreviousDeckToDeckBuilderCurrentDeckZone(data);
     });
   } else {
     api.updateDeck(newDeckName, deckId, newDeckList).then((data) => {
       renderDeckBuilderPreviousDeckZone(heroClass);
+      loadPreviousDeckToDeckBuilderCurrentDeckZone(data);
     });
   }
 }
 
 // onclick funktion för att ladda en sparad kortlek till decklistan
-function loadPreviousDeckToDeckBuilderCurrentDeckZone(button) {
-  const id = button.id;
+function loadPreviousDeckToDeckBuilderCurrentDeckZone({ id }) {
   api
     .getDeckById(id)
     .then((deck) => renderDeckBuilderCurrentDeckZoneFromId(deck));
@@ -196,11 +197,10 @@ function startNewDeck() {
 }
 
 // onclick funktion för att ta bort sparad deck
-function deleteDeck() {
-  const deckId = document.getElementById("deckBuild").name;
-  if (deckId != -1) {
+function deleteDeck({ id }) {
+  if (id != -1) {
     api
-      .deleteDeck(deckId)
+      .deleteDeck(id)
       .then((data) => renderDeckBuilderPreviousDeckZone(data.class));
     DeckBuilderCurrentDeckZoneSetToNewDeck();
   } else {

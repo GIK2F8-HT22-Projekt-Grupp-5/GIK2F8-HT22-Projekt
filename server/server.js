@@ -192,9 +192,9 @@ app.post("/deck", async (req, res) => {
     }
     const newDeck = {
       id: maxDeckId,
-      deckName: body[0],
-      class: body[1],
-      cards: body[2],
+      deckName: body.name,
+      class: body.class,
+      cards: body.cards,
     };
     const deckList = currentDecks ? [...currentDecks, newDeck] : [newDeck];
     await fs.writeFile("./JSON/decks.json", JSON.stringify(deckList));
@@ -206,20 +206,23 @@ app.post("/deck", async (req, res) => {
 
 // Uppdaterar deck med visst ID
 app.patch("/deck/:id", async (req, res) => {
-  const id = req.body.id;
+  const deckId = req.body.id;
   try {
     const listBuffer = await fs.readFile("./JSON/decks.json");
     const currentDecks = JSON.parse(listBuffer);
 
     currentDecks.forEach((deck) => {
-      if (deck.id == id) {
+      if (deck.id == deckId) {
         deck.cards = req.body.cards;
         deck.deckName = req.body.name;
       }
     });
 
     await fs.writeFile("./JSON/decks.json", JSON.stringify(currentDecks));
-    res.send({ messege: `Deck med id: ${id} uppdaterades` });
+    res.send({
+      messege: `Deck med id: ${deckId} uppdaterades`,
+      id: `${deckId}`,
+    });
   } catch (error) {
     res.status(500).send({ error: error.stack });
   }

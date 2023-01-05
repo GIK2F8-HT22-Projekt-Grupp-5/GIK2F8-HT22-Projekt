@@ -7,7 +7,12 @@ class Api {
 
   // Skapar en deck
   createDeck(deckName, heroClass, deckList) {
-    const JSONdata = JSON.stringify([deckName, heroClass, deckList]);
+    const JSONdata = JSON.stringify({
+      name: deckName,
+      class: heroClass,
+      cards: deckList,
+    });
+    //const JSONdata = JSON.stringify([deckName, heroClass, deckList]);
     const request = new Request(this.url, {
       method: "POST",
       body: JSONdata,

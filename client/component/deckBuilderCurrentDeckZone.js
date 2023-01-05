@@ -73,10 +73,18 @@ function deckBuilderCurrentDeckZone(incomingDeck) {
             name="submitButton">
             Save</button>
 
-            <button class="flex grow  bg-sky-900 bg-opacity-50 rounded-xl 
+            <button 
+            id="`;
+  if (id === -1) {
+    html += `-1`;
+  } else {
+    html += `${id}`;
+  }
+  html += `"
+            class="flex grow  bg-sky-900 bg-opacity-50 rounded-xl 
             text-sm break-all items-center justify-center p-2"
             type="button"
-            onclick="deleteDeck()"
+            onclick="deleteDeck(this)"
             name="DelButton">
             Delete</button>
           </div>
